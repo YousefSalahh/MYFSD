@@ -24,4 +24,12 @@ export class AuthService {
       called "sub" in payload which maps to the user id.
     */
   }
+
+  logout() {
+    return this.jwtService.sign( {
+        exp :  new Date().getTime(), 
+    }
+    )
+  }
+
 }

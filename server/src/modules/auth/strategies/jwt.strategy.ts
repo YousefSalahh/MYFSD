@@ -16,7 +16,11 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
    * On successfull validation, returns jwt payload (assigned to req.user)
    * @param payload
    */
-  async validate(payload: any) {
+   */
+   async validate(payload: any) {
+     console.log("validate()", payload);
+     return payload;
+   }
     /*
       Each JWT has a "payload" section, which includes 
       the data we insert into the JWT object when
@@ -30,6 +34,4 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       on the Express HTTP Request object and assign whatever 
       is returned here to req.user
     */
-    return payload;
-  }
-}
+  

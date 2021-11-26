@@ -5,6 +5,7 @@ import { UserService } from "../user/user.service";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { UserDocument,User } from "src/schemas/user.schema";
+import { JwtStrategy } from "./strategies/jwt.strategy";
 
 @Injectable()
 export class AuthService {
@@ -50,8 +51,10 @@ export class AuthService {
       phone: phone,
       dateofBirth: dateofBirth,
     };
-    return this.jwtService.sign(payload);
+    return {
+      acccess_token:this.jwtService.sign(payload),
   }
+}
 
   
   findOne({ GIUemail }): Promise<User> {
@@ -79,5 +82,14 @@ export class AuthService {
     }
     )
   }
+
+
+
+  
+
+
+
+
+
 
 }

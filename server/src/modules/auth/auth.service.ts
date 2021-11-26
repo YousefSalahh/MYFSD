@@ -27,7 +27,7 @@ export class AuthService {
 
   logout() {
     return this.jwtService.sign( {
-        exp :  new Date().getTime(), 
+        expiresIn :  new Date().getTime(), 
     }
     )
   }

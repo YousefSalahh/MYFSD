@@ -1,5 +1,6 @@
 import apiService from "../services/apiService";
 import { useQuery, useQueryClient, useMutation } from "react-query";
+import { Redirect } from "next/dist/lib/load-custom-routes";
 
 export default function useFetchUser(userId) {
   return useQuery(["userData", userId], () =>
@@ -18,12 +19,14 @@ export default function useMutateLoginUser() {
     {
       // When mutate is called:
       onSuccess: (responseData) => {
+        window.localStorage.setItem("jwt",responseData.payload)
         // Store Token in local storage
       },
       onError: (e) => console.log(e.message),
     }
   );
 }
+
 
 
 export default function useMutateRegisterUser() {
@@ -37,6 +40,7 @@ export default function useMutateRegisterUser() {
     {
       // When mutate is called:
       onSuccess: (responseData) => {
+        responseData.Redirect('/login');
         // Redirect to login page
       },
       onError: (e) => console.log(e.message),

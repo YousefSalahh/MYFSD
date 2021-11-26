@@ -75,6 +75,8 @@ export default function Register() {
       passwordState === "has-success" &&
       confirmPasswordState === "has-success"
     ) {
+
+      return useMutateRegister()      
       // Call User Register Adapter
     }
   };

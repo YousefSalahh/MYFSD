@@ -39,8 +39,19 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Call User Login Adapter
-  };
+    validateEmail(email);
+    validatePassword(password);
+    validateConfirmPassword(confirmPassword);
+
+    if (
+      emailState === "has-success" &&
+      passwordState === "has-success" &&
+      confirmPasswordState === "has-success"
+    ) {
+
+      return useMutateLoginUser();
+
+  }
 
   return (
     <div className={styles.App}>
@@ -74,8 +85,9 @@ export default function Login() {
             onChange={handleChange}
           />
         </FormGroup>
-        <Button color="primary">Submit</Button>
+        <Button color="primary" >Submit</Button>
       </Form>
     </div>
   );
+}
 }

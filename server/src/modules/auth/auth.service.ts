@@ -1,11 +1,10 @@
 import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { AuthDto , registerDto } from "./dtos/auth.dto"; 
+import { AuthDto,registerDto} from "./dtos/auth.dto"; 
 import { UserService } from "../user/user.service";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { UserDocument,User } from "src/schemas/user.schema";
-
 
 @Injectable()
 export class AuthService {
@@ -60,12 +59,6 @@ export class AuthService {
     return this.userModel.findOne({ GIUemail: GIUemail }).exec();
   }
 
-  
-  findOne2({ SID }): Promise<User> {
-    console.log(SID);
-    return this.userModel.findOne({ SID: SID }).exec();
-  }
-
   async register(dto : registerDto) {
     const user = await this.UserService.findOne({ GIUemail: dto.email });
     const userSID = await this.UserService.findOne2({ SID: dto.SID });
@@ -80,11 +73,11 @@ export class AuthService {
 
     }
 
-    logout() {
-      return this.jwtService.sign( {
-          exp :  new Date().getTime(), 
-      }
-      )
+  logout() {
+    return this.jwtService.sign( {
+        exp :  new Date().getTime(), 
     }
- 
+    )
+  }
+
 }

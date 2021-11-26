@@ -12,22 +12,12 @@ export class UserService {
     return this.userModel.find().exec();
   }
 
-<<<<<<< HEAD
-
-  
-=======
->>>>>>> fb7a16ffea15aeabfffedea2472978827b1e4fbf
   findOne({ GIUemail }): Promise<User> {
     console.log(GIUemail);
     return this.userModel.findOne({ GIUemail: GIUemail }).exec();
   }
-<<<<<<< HEAD
-
-}
-=======
   findOne2({ SID }): Promise<User> {
     console.log(SID);
     return this.userModel.findOne({ SID: SID }).exec();
   }
 }
->>>>>>> fb7a16ffea15aeabfffedea2472978827b1e4fbf

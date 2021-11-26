@@ -59,6 +59,7 @@
     "chalk": "^4.1.2",
     "chokidar": "^3.5.1",
     "cipher-base": "^1.0.4",
+    "class-validator": "^0.13.2",
     "classnames": "^2.2.6",
     "cliui": "^7.0.4",
     "color-convert": "^2.0.1",

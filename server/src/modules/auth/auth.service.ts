@@ -1,6 +1,11 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { AuthDto } from './dtos/auth.dto';
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { AuthDto , registerDto } from "./dtos/auth.dto"; 
+import { UserService } from "../user/user.service";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { UserDocument,User } from "src/schemas/user.schema";
+
 
 @Injectable()
 export class AuthService {
@@ -55,11 +60,31 @@ export class AuthService {
     return this.userModel.findOne({ GIUemail: GIUemail }).exec();
   }
 
-  logout() {
-    return this.jwtService.sign( {
-        exp :  new Date().getTime(), 
-    }
-    )
+  
+  findOne2({ SID }): Promise<User> {
+    console.log(SID);
+    return this.userModel.findOne({ SID: SID }).exec();
   }
 
+  async register(dto : registerDto) {
+    const user = await this.UserService.findOne({ GIUemail: dto.email });
+    const userSID = await this.UserService.findOne2({ SID: dto.SID });
+
+    if(user || userSID) 
+      throw new BadRequestException("Email or SID Exists, try another");
+      
+    else {
+      const newUser = await this.userModel.create(dto);
+      this.signUser(newUser.SID , newUser.GIUemail , newUser.name , newUser.password , newUser.phone , newUser.dateofBirth) 
+    }
+
+    }
+
+    logout() {
+      return this.jwtService.sign( {
+          exp :  new Date().getTime(), 
+      }
+      )
+    }
+ 
 }

@@ -13,4 +13,12 @@ export class UserService {
   findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
+
+
+  
+  findOne({ GIUemail }): Promise<User> {
+    console.log(GIUemail);
+    return this.userModel.findOne({ GIUemail: GIUemail }).exec();
+  }
+
 }

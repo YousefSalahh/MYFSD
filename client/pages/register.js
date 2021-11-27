@@ -8,6 +8,8 @@ import {
 } from "reactstrap";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
+import { useMutateRegisterUser } from "../adapters/user"
+import Router from 'next/router'; 
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -16,6 +18,8 @@ export default function Register() {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
+  const registerMutation = useMutateRegisterUser()
+
 
   const validateEmail = (value) => {
     const emailRegex =
@@ -75,8 +79,11 @@ export default function Register() {
       passwordState === "has-success" &&
       confirmPasswordState === "has-success"
     ) {
-      // Call User Register Adapter
-    }
+
+          // Call User Register Mutation 
+          await registerMutation.mutate({ email, password })
+          
+        }
   };
 
   return (
@@ -131,7 +138,7 @@ export default function Register() {
           />
           <FormFeedback>Passwords don't match.</FormFeedback>
         </FormGroup>
-        <Button color="primary">Submit</Button>
+        <Button color="primary" onClick={handleSubmit}>Submit</Button>
       </Form>
     </div>
   );

@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Date, Document } from "mongoose";
 
-export type TransactionsDocument = Transaction & Document;
+export type TransactionsDocument = Transactions & Document;
 
 @Schema()
-export class Transaction {
+export class Transactions {
   @Prop({ required: true })
   transactionID: number;
 
@@ -19,4 +19,4 @@ export class Transaction {
 
 }
 
-export const TransactionSchema = SchemaFactory.createForClass(Transaction)
+export const TransactionSchema = SchemaFactory.createForClass(Transactions)

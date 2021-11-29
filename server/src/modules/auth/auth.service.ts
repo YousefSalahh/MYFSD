@@ -62,9 +62,13 @@ export class AuthService {
     return this.userModel.findOne({ GIUemail: GIUemail }).exec();
   }
 
+ 
+  }
+
+
+
   
   // findOne2({ SID }): Promise<User> {
   //   console.log(SID);
   //   return this.userModel.findOne({ SID: SID }).exec();
   // }
-}

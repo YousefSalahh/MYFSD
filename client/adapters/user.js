@@ -1,7 +1,6 @@
 import apiService from "../services/apiService";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 
-
 import Router from 'next/router'
 
 
@@ -24,7 +23,6 @@ export function useMutateLoginUser() {
     {
       // When mutate is called:
       onSuccess: (responseData) => {
-        window.localStorage.setItem("jwt",responseData.payload)
         // Store Token in local storage
         localStorage.setItem('jwt', responseData)
       },

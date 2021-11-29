@@ -1,11 +1,11 @@
-import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
+import {  Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { AuthDto,registerDto} from "./dtos/auth.dto"; 
+import { AuthDto } from "./dtos/auth.dto"; 
 import { UserService } from "../user/user.service";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { UserDocument,User } from "src/schemas/user.schema";
-import { JwtStrategy } from "./strategies/jwt.strategy";
+
 
 @Injectable()
 export class AuthService {
@@ -62,28 +62,9 @@ export class AuthService {
     return this.userModel.findOne({ GIUemail: GIUemail }).exec();
   }
 
-  async register(dto : registerDto) {
-    const user = await this.UserService.findOne({ GIUemail: dto.GIUemail });
-    const userSID = await this.UserService.findOne2({ SID: dto.SID });
-
-    if(user || userSID) 
-      throw new BadRequestException("Email or SID Exists, try another");
-      
-    else {
-      const newUser = await this.userModel.create(dto);
-      this.signUser(newUser.SID , newUser.GIUemail , newUser.name , newUser.password , newUser.phone , newUser.dateofBirth) 
-    }
-
-    }
-
-
-
-
   
-
-
-
-
-
-
+  // findOne2({ SID }): Promise<User> {
+  //   console.log(SID);
+  //   return this.userModel.findOne({ SID: SID }).exec();
+  // }
 }

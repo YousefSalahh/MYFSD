@@ -39,3 +39,4 @@ jest.json
 !.vscode/extensions.json
 
 node_modules
+node_modules

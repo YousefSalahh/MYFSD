@@ -8,24 +8,3 @@ export class AuthDto {
   password: string;
 }
 
-
-export class registerDto {
-  @IsEmail()
-  email: string;
-
-  @Length(4)
-  SID: number;
-
-  @Length(6, 20)
-  password: string;
-  
-  @IsNotEmpty()
-  name: string;
-
-  @IsDate()
-  dateofBirth: string;
-
-  @Length(11)
-  phone: string ; 
-
-}

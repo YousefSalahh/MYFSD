@@ -1,14 +1,15 @@
 import apiService from "../services/apiService";
 import { useQuery, useQueryClient, useMutation } from "react-query";
-import { Redirect } from "next/dist/lib/load-custom-routes";
+import Router from 'next/router'
 
-export default function useFetchUser(userId) {
+
+export  function useFetchUser(userId) {
   return useQuery(["userData", userId], () =>
     apiService.get(`user/${userId}`).then(({ data }) => data)
   );
 }
 
-export default function useMutateLoginUser() {
+export  function useMutateLoginUser() {
   return useMutation(
     (user) => {
       const data = new FormData();
@@ -19,8 +20,7 @@ export default function useMutateLoginUser() {
     {
       // When mutate is called:
       onSuccess: (responseData) => {
-        window.localStorage.setItem("jwt",responseData.payload)
-        // Store Token in local storage
+        localStorage.setItem('jwt', responseData)
       },
       onError: (e) => console.log(e.message),
     }
@@ -28,8 +28,7 @@ export default function useMutateLoginUser() {
 }
 
 
-
-export default function useMutateRegisterUser() {
+export  function useMutateRegisterUser() {
   return useMutation(
     (user) => {
       const data = new FormData();
@@ -40,7 +39,7 @@ export default function useMutateRegisterUser() {
     {
       // When mutate is called:
       onSuccess: (responseData) => {
-        responseData.Redirect('/login');
+          responseData = window.location.replace("/login");
         // Redirect to login page
       },
       onError: (e) => console.log(e.message),
@@ -48,7 +47,7 @@ export default function useMutateRegisterUser() {
   );
 }
 
-export default function useMutateUpdateUser(userId) {
+export  function useMutateUpdateUser(userId) {
   const queryClint = useQueryClient();
   return useMutation(
     (user) => {

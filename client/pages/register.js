@@ -8,6 +8,8 @@ import {
 } from "reactstrap";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
+import { useHistory } from "react-router-dom";
+import { useMutateRegisterUser } from "../adapters/user";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -16,6 +18,16 @@ export default function Register() {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
+  
+
+  const [phone, setPhone] = useState("");
+
+  const [SID , setSID] = useState("");
+  const [SIDState, setSIDState] = useState("");
+
+  const [name , setName] = useState("");
+  const [username , setUserName] = useState("") ;
+
 
   const validateEmail = (value) => {
     const emailRegex =
@@ -29,6 +41,20 @@ export default function Register() {
     }
     setEmailState(emailState);
   };
+
+  const validateSID = (value) => {
+    const emailRegex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    let SIDState;
+    if (SIDRegex.test(value)) {
+      SIDState = "has-success";
+    } else {
+      SIDState = "has-danger";
+    }
+    setSIDState(SIDState);
+  };
+
 
   const validatePassword = (value) => {
     let PasswordState;
@@ -72,12 +98,13 @@ export default function Register() {
 
     if (
       emailState === "has-success" &&
+      SIDState === "has-success" &&
       passwordState === "has-success" &&
       confirmPasswordState === "has-success"
     ) {
-
-      return useMutateRegister()      
+       
       // Call User Register Adapter
+       
     }
   };
 
@@ -131,7 +158,7 @@ export default function Register() {
             valid={confirmPasswordState === "has-success"}
             invalid={confirmPasswordState === "has-danger"}
           />
-          <FormFeedback>Passwords don't match.</FormFeedback>
+          <FormFeedback>Passwords donnot match.</FormFeedback>
         </FormGroup>
         <Button color="primary">Submit</Button>
       </Form>

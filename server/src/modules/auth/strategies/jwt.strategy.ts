@@ -23,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     const user = await this.UserService.findOne({ GIUemail: payload.email });
     if (!user || user.password !== payload.password)
       throw new UnauthorizedException("Credentials incorrect");
-    return user;
+    return payload.email,payload.password;
    }
 
     /*

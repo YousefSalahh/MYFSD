@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
-import Login from "../components/Login";
-import Dashboard from "../components/Dashboard";
+import "../styles/globals.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-export default function Home() {
-  const [accessToken, setAccessToken] = useState("");
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 
-  useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    setAccessToken(token);
-  }, []);
+const queryClient = new QueryClient()
 
-  return accessToken ? <Dashboard /> : <Login />;
+function MyApp({ Component, pageProps }) {
+  return (
+    <QueryClientProvider client={queryClient}> 
+      <Component {...pageProps} />
+    </QueryClientProvider>
+    )
 }
+
+export default MyApp;

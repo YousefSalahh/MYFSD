@@ -11,11 +11,17 @@ export class Transactions {
   @Prop({required:true})
   accountID:number;
 
-  @Prop({ required: true })
-  name: string;
+  @Prop({ type: Date, required: true })
+  dateOfToday: Date;
 
   @Prop({ required: true })
-  dateOfToday: Date;
+  debitAmount: number;
+
+  @Prop({ required: true })
+  creditAmount: number;
+
+  
+
 
 }
 

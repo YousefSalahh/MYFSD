@@ -3,7 +3,7 @@ import {
   Controller,
   Post,
 } from "@nestjs/common";
-import { AuthDto, registerDto } from "./dtos/auth.dto";
+import { AuthDto } from "./dtos/auth.dto";
 import { AuthService } from "./auth.service";
 
 @Controller("auth")
@@ -21,10 +21,6 @@ export class AuthController {
     return this.authService.login(dto);
   }
 
-  @Post("/register")
-  register(@Body() dto: registerDto){
-    return this.authService.register(dto);
-  }
 
 
 }

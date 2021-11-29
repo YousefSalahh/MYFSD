@@ -1,45 +1,22 @@
-import { Controller,
-  Post,
-  Body,
-  Get,
-  Param,
-  } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
+import { UseGuards,Get,Post,Param,Body } from '@nestjs/common';
+import { TransactionDto } from './transaction.dto';
 
 
 @Controller('transactions')
 export class TransactionController {
-  constructor(private readonly transactionService: TransactionService) {}
-
-  @Post('trasnaction')
-  addTransaction(
-    @Body('date ') transDate: Date,
-    @Body('transactionid') transID: string,
-    @Body('debitAmnt') debitAmount: number,
-    @Body('creditAmnt') creditAmount: number,
-    @Body('totalAmnt') totAmount: number,
+  constructor(private transactionService: TransactionService) {}
 
 
-  ) {
-    const generatedId = this.transactionService.insertTransaction(
-      transID,
-      transDate,
-      debitAmount,
-      creditAmount,
-      totAmount,
-    );
+  @UseGuards()
+  @Get(':accountID')
+  transaction(@Param()accountID:number):any{
+    return this.transactionService.findTransaction(accountID);
 
-}
-// @Get(':id')
-//   getTransaction(@Param('id') transId: number) {
-//     return this.transactionService.getSingleTransaction(transId);
-//   }
-
-  @Get('transaction/:id')
-  getAccount(@Param('id') accountID: string) {
-    return this.transactionService.getTransaction(accountID);  
   }
-  
+
+
 
 
 

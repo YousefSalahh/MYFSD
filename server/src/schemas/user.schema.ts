@@ -27,7 +27,7 @@ export class User {
   phone: string;
 
   @Prop({ required: true })
-  accID: number;
+  accountID: number;
 
   @Prop({ required: true })
   inital_Balance: string;

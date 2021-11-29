@@ -9,6 +9,9 @@ export class User {
   name: string;
 
   @Prop({ required: true })
+  userName: string;
+
+  @Prop({ required: true })
   GIUemail: string;
 
   @Prop({ required: true })
@@ -22,6 +25,14 @@ export class User {
 
   @Prop({ required: true })
   phone: string;
+
+  @Prop({ required: true })
+  accID: number;
+
+  @Prop({ required: true })
+  inital_Balance: string;
+
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

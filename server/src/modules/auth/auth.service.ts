@@ -16,7 +16,7 @@ export class AuthService {
   ) {}
 
   async validateUser(dto: AuthDto): Promise<User> {
-    const user = await this.UserService.findOne({ GIUemail: dto.email });
+    const user = await this.UserService.findOne({ GIUemail: dto.GIUemail });
     if (!user || user.password !== dto.password)
       throw new UnauthorizedException("Credentials incorrect");
     return user;
@@ -52,7 +52,7 @@ export class AuthService {
       dateofBirth: dateofBirth,
     };
     return {
-      acccess_token:this.jwtService.sign(payload),
+      acccess_token:this.jwtService.sign(payload, {secret: process.env.JWT_SECRET}),
   }
 }
 
@@ -63,7 +63,7 @@ export class AuthService {
   }
 
   async register(dto : registerDto) {
-    const user = await this.UserService.findOne({ GIUemail: dto.email });
+    const user = await this.UserService.findOne({ GIUemail: dto.GIUemail });
     const userSID = await this.UserService.findOne2({ SID: dto.SID });
 
     if(user || userSID) 
@@ -76,12 +76,6 @@ export class AuthService {
 
     }
 
-  logout() {
-    return this.jwtService.sign( {
-        expiresIn :  new Date().getTime(), 
-    }
-    )
-  }
 
 
 

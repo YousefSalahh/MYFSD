@@ -1,8 +1,8 @@
 import React from "react";
 import { Table } from "reactstrap";
-
+import { useFetchTransaction } from "../adapters/transaction"
 import { useState, useEffect } from "react";
-import apiService from "../../services/apiService"
+// import apiService from "../../services/apiService"
 import { useRouter } from 'next/router'
 
 
@@ -19,18 +19,17 @@ export default function transactions() {
   const { accountID } = router.query
 
   
-  const [transactions, setTransactions] = useState([]);
+  // const [transactions, setTransactions] = useState([]);
+
+  const {data} =  useFetchTransaction(accountID)
 
 
-  async function getTransactions () {
-    const response = await apiService.get('https://localhost:3000/')
-    setTransactions(response)
-  }
+  // async function getTransactions () {
+  //   // const response = await apiService.get('https://localhost:3000/transaction' + {accountID})
+  //   setTransactions(response)
+  // }
 
   // TODO: uncomment after setting the proper URL  
-  // useEffect(() => {
-  //   getTransactions()
-  // })
 
   return <div>
     <h1> AccountID: {accountID} </h1>
@@ -55,13 +54,13 @@ export default function transactions() {
       </tr>
     </thead>
     <tbody>
-      { transactions.map((transaction, i) => (
+      { data.map((data, i) => (
           <tr>
-            <th scope="row">{transaction.transID}</th>
-            <td>{transaction.date}</td>
-            <td>{transaction.debit}</td>
-            <td>{transaction.credit}</td>
-            <td>{transaction.balance}</td>
+            <th scope="row">{data.transID}</th>
+            <td>{data.date}</td>
+            <td>{data.debit}</td>
+            <td>{data.credit}</td>
+            <td>{data.balance}</td>
         </tr>
       )) }
 

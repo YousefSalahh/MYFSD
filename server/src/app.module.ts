@@ -9,9 +9,9 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     AuthModule,
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.MONGO_URL),
-    TransactionModule,
+    MongooseModule.forRoot(process.env.MONGO_URL, { dbName: 'test' }),
     UsersModule,
-  ],
+    TransactionModule,
+  ]
 })
 export class AppModule {}

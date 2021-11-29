@@ -2,7 +2,7 @@ import { IsDate, IsEmail, IsNotEmpty, IsString, Length } from "class-validator";
 
 export class AuthDto {
   @IsEmail()
-  email: string;
+  GIUemail: string;
 
   @IsNotEmpty()
   password: string;
@@ -10,19 +10,19 @@ export class AuthDto {
 
 
 export class registerDto {
-  @IsEmail()
-  email: string;
+  @IsNotEmpty()
+  GIUemail: string;
 
-  @Length(4)
+  @IsNotEmpty()
   SID: number;
 
-  @Length(6, 20)
+  @IsNotEmpty()
   password: string;
   
   @IsNotEmpty()
   name: string;
 
-  @IsDate()
+  @IsNotEmpty()
   dateofBirth: string;
 
   @Length(11)

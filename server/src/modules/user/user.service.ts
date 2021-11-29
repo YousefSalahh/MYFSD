@@ -20,7 +20,7 @@ export class UserService {
   }
 
   async register(dto : registerDto) {
-    const user = await this.findOne({ GIUemail: dto.email });
+    const user = await this.findOne({ GIUemail: dto.GIUemail });
 
     if(user) 
       throw new BadRequestException("Email try another");

@@ -2,7 +2,7 @@ import { IsDate, IsEmail, IsNotEmpty, IsString, Length } from "class-validator";
 
 export class AuthDto {
   @IsEmail()
-  email: string;
+  GIUemail: string;
 
   @IsNotEmpty()
   password: string;

@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import { QueryClient, QueryClientProvider} from 'react-query'
 
 const queryClient = new QueryClient()
 

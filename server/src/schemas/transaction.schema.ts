@@ -11,7 +11,7 @@ export class Transactions {
   @Prop({required:true})
   accountID:number;
 
-  @Prop({ required: true })
+  @Prop({  type: Date, required: true })
   dateOfToday: Date;
 
   @Prop({ required: true })

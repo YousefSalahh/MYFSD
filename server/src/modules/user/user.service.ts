@@ -19,13 +19,8 @@ export class UserService {
     return this.userModel.findOne({ GIUemail: GIUemail }).exec();
   }
 
-<<<<<<< HEAD
-  findOne2({ SID }): Promise<User> {
-    console.log(SID);
-    return this.userModel.findOne({ SID: SID }).exec();
-=======
   async register(dto : registerDto) {
-    const user = await this.findOne({ GIUemail: dto.email });
+    const user = await this.findOne({ GIUemail: dto.GIUemail });
 
     if(user) 
       throw new BadRequestException("Email try another");
@@ -35,7 +30,6 @@ export class UserService {
       return newUser.save();
       
     }
->>>>>>> 4ea695bc8987023b1390f6f010659e1bfed44605
   }
 
 }

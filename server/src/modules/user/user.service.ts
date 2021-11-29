@@ -18,18 +18,11 @@ export class UserService {
     console.log(GIUemail);
     return this.userModel.findOne({ GIUemail: GIUemail }).exec();
   }
-  /*
-  findOne2({ SID }): Promise<User> {
-    console.log(SID);
-    return this.userModel.findOne({ SID: SID }).exec();
-  }
-  */
 
   async register(dto : registerDto) {
     const user = await this.findOne({ GIUemail: dto.email });
-    //const userSID = await this.findOne2({ SID: dto.SID });
 
-    if(user /*|| userSID*/) 
+    if(user) 
       throw new BadRequestException("Email try another");
       
     else {

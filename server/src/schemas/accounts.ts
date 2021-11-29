@@ -6,19 +6,12 @@ export type AccountsDocument = Accounts & Document;
 @Schema()
 export class Accounts {
   @Prop({ required: true })
-  debitAmont: number;
-
+  balance: number;
+  
   @Prop({ required: true })
-  creditAmount: number;
+  active: string;
+  
 
-  @Prop({ required: true })
-  totalAmount: number;
 
-  @Prop({ required: true })
-  ID: string;
-
-  @Prop({ required: true })
-  dateOfToday: Date;
 }
-
-export const AccountSchema = SchemaFactory.createForClass(Accounts);
+  export const AccountSchema = SchemaFactory.createForClass(Accounts);

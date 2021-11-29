@@ -18,8 +18,11 @@ export default function Register() {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
-  const registerMutation = useMutateRegisterUser()
+  const [name, setName]=useState("");
+  const [nameState,setNameState]=useState("");
 
+
+  const registerMutation = useMutateRegisterUser();
 
   const validateEmail = (value) => {
     const emailRegex =
@@ -33,6 +36,7 @@ export default function Register() {
     }
     setEmailState(emailState);
   };
+
 
   const validatePassword = (value) => {
     let PasswordState;
@@ -53,6 +57,8 @@ export default function Register() {
     }
     setConfirmPasswordState(confirmPasswordState);
   };
+
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -77,7 +83,7 @@ export default function Register() {
     if (
       emailState === "has-success" &&
       passwordState === "has-success" &&
-      confirmPasswordState === "has-success"
+      confirmPasswordState === "has-success" 
     ) {
 
           // Call User Register Mutation 
@@ -138,6 +144,7 @@ export default function Register() {
           />
           <FormFeedback>Passwords don't match.</FormFeedback>
         </FormGroup>
+        
         <Button color="primary" onClick={handleSubmit}>Submit</Button>
       </Form>
     </div>

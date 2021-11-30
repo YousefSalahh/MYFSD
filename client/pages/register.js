@@ -109,8 +109,6 @@ export default function Register() {
     setConfirmPasswordState(confirmPasswordState);
   };
 
-  
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "email") {

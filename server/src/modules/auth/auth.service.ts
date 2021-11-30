@@ -52,7 +52,7 @@ export class AuthService {
       dateofBirth: dateofBirth,
     };
     return {
-      acccess_token: this.jwtService.sign(payload),
+      acccess_token:this.jwtService.sign(payload, {secret: process.env.JWT_SECRET}),
   }
 }
 
@@ -68,9 +68,7 @@ export class AuthService {
 
 
   
-
-
-
-
-
-
+  // findOne2({ SID }): Promise<User> {
+  //   console.log(SID);
+  //   return this.userModel.findOne({ SID: SID }).exec();
+  // }

@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import { useMutateLoginUser } from "../adapters/user"
 import styles from "../styles/Home.module.css";
-import {useMutateLoginUser} from "../adapters/user";
+import { useMutateLoginUser }  from "../adapters/user";
 
 
 
@@ -51,6 +51,13 @@ export default function Login() {
 
   };
 
+  
+   const handleRegister=(event)=>
+  {
+  
+  };
+
+
   return (
     <div className={styles.App}>
       <h2>Sign In</h2>
@@ -84,6 +91,7 @@ export default function Login() {
           />
         </FormGroup>
         <Button color="primary" onClick={handleSubmit}>Submit</Button>
+        <Button color="primary" onClick={handleRegister}>Sign Up</Button>
       </Form>
     </div>
   );

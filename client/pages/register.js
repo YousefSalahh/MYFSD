@@ -96,7 +96,7 @@ export default function Register() {
     ) {
 
           // Call User Register Mutation 
-          await registerMutation.mutate({ email, password })
+         await registerMutation.mutate({ email, password })
           
         }
   };

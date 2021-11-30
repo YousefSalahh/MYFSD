@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Date, Document, PromiseProvider } from "mongoose";
 
-export type AccountsDocument = Accounts & Document;
+export type AccountsDocument = Account & Document;
 
 @Schema()
-export class Accounts {
+export class Account {
 
   @Prop({ required: true })
   balance: number;
@@ -15,4 +15,4 @@ export class Accounts {
 
 
 }
-  export const AccountSchema = SchemaFactory.createForClass(Accounts);
+  export const AccountSchema = SchemaFactory.createForClass(Account);

@@ -46,8 +46,6 @@ export default function Register() {
     setEmailState(emailState);
   };
 
-<<<<<<< HEAD
-=======
   const validateSID = (value) => {
     const emailRegex =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -61,7 +59,6 @@ export default function Register() {
     setSIDState(SIDState);
   };
 
->>>>>>> bb125106b0c0c3087f7d3d554031e9e624c34d55
 
   const validatePassword = (value) => {
     let PasswordState;
@@ -178,13 +175,8 @@ export default function Register() {
     ) {
 
           // Call User Register Mutation 
-<<<<<<< HEAD
            registerMutation.mutate({ email, password , phone , SID , userName , name })
           //await
-=======
-         await registerMutation.mutate({ email, password })
-          
->>>>>>> bb125106b0c0c3087f7d3d554031e9e624c34d55
         }
   };
 

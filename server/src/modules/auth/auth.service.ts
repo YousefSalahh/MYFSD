@@ -5,36 +5,32 @@ import { UserService } from "../user/user.service";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { UserDocument,User } from "src/schemas/user.schema";
-
+import { JwtStrategy } from "./strategies/jwt.strategy";
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private UserService: UserService,
-    @InjectModel(User.name) private userModel: Model<UserDocument>
-  ) {}
+    private jwtStrategy: JwtStrategy,
 
-  async validateUser(dto: AuthDto): Promise<User> {
-    const user = await this.UserService.findOne({ GIUemail: dto.GIUemail });
-    if (!user || user.password !== dto.password)
-      throw new UnauthorizedException("Credentials incorrect");
-    return user;
-  }
+    private UserService: UserService,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+
+    ) {}
+
 
   async login(dto: AuthDto) {
-    const user = await this.validateUser(dto);
+    
+   const payload={
+     GIUemail:dto.GIUemail,
+     password:dto.password
+   }
 
-    return this.signUser(
-      user.SID,
-      user.GIUemail,
-      user.name,
-      user.password,
-      user.phone,
-      user.dateofBirth,    
-    );
+   let credentials = this.jwtStrategy.validate(payload)
+   return this.jwtService.sign(credentials,{secret:process.env.JWT_SECRET});
   }
-
+  
+/*
   signUser(
     SID: number,
     GIUemail: string,
@@ -42,33 +38,33 @@ export class AuthService {
     password: string,
     phone: string,
     dateofBirth: string
-  ) {
-    const payload = {
-      sub: SID,
-      GIUemail: GIUemail,
-      name:name,
-      password: password,
-      phone: phone,
-      dateofBirth: dateofBirth,
-    };
-    return {
-      acccess_token:this.jwtService.sign(payload, {secret: process.env.JWT_SECRET}),
-  }
-}
+  ){
+    const payload={
+    sub: SID,
+    GIUemail: GIUemail,
+    name: name,
+    password: password,
+    phone: phone,
+    dateofBirth: dateofBirth
+    }
 
-  
+    return {
+      acccess_token:this.jwtService.sign(payload,{secret:process.env.JWT_SECRET}),
+    }
+  }
+*/
+   
   findOne({ GIUemail }): Promise<User> {
     console.log(GIUemail);
     return this.userModel.findOne({ GIUemail: GIUemail }).exec();
   }
+/*
 
- 
+  async validateUser(dto: AuthDto): Promise<User> {
+    const user = await this.UserService.findOne({ GIUemail: dto.GIUemail });
+    if (!user || user.password !== dto.password)
+      throw new UnauthorizedException("Credentials incorrect");
+    return user;
   }
-
-
-
-  
-  // findOne2({ SID }): Promise<User> {
-  //   console.log(SID);
-  //   return this.userModel.findOne({ SID: SID }).exec();
-  // }
+*/
+}

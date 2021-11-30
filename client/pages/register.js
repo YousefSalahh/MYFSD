@@ -46,6 +46,22 @@ export default function Register() {
     setEmailState(emailState);
   };
 
+<<<<<<< HEAD
+=======
+  const validateSID = (value) => {
+    const emailRegex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    let SIDState;
+    if (SIDRegex.test(value)) {
+      SIDState = "has-success";
+    } else {
+      SIDState = "has-danger";
+    }
+    setSIDState(SIDState);
+  };
+
+>>>>>>> bb125106b0c0c3087f7d3d554031e9e624c34d55
 
   const validatePassword = (value) => {
     let PasswordState;
@@ -152,6 +168,7 @@ export default function Register() {
     validateuserName(userName);
     if (
       emailState === "has-success" &&
+      SIDState === "has-success" &&
       passwordState === "has-success" &&
       confirmPasswordState === "has-success" &&
       phoneState === "has-success" &&
@@ -161,8 +178,13 @@ export default function Register() {
     ) {
 
           // Call User Register Mutation 
+<<<<<<< HEAD
            registerMutation.mutate({ email, password , phone , SID , userName , name })
           //await
+=======
+         await registerMutation.mutate({ email, password })
+          
+>>>>>>> bb125106b0c0c3087f7d3d554031e9e624c34d55
         }
   };
 
@@ -216,7 +238,7 @@ export default function Register() {
             valid={confirmPasswordState === "has-success"}
             invalid={confirmPasswordState === "has-danger"}
           />
-          <FormFeedback>Passwords don't match.</FormFeedback>
+          <FormFeedback>Passwords donnot match.</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label className={styles.label} for="name">

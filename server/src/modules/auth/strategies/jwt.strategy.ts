@@ -6,7 +6,7 @@ import { UserService } from 'src/modules/user/user.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-  constructor(private userService: UserService) {
+  constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreException: true,
@@ -19,11 +19,11 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
    * @param payload
    */
    
-   async validate(payload: any) {
-    const user = await this.userService.findOne({ GIUemail: payload.email });
+   async validate(payload) {
+    const user = await this.UserService.findOne({ GIUemail: payload.email });
     if (!user || user.password !== payload.password)
       throw new UnauthorizedException("Credentials incorrect");
-    return user;
+    return payload.email,payload.password;
    }
 
     /*

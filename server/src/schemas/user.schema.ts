@@ -26,10 +26,10 @@ export class User {
   @Prop({ required: true })
   phone: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   accountID: number;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   inital_Balance: string;
 
 

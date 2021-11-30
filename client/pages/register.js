@@ -59,7 +59,7 @@ export default function Register() {
 
   const validatePhone = (value) => {
     let phoneState;
-    if (value.length = 11) {
+    if (value.length === 11) {
       phoneState = "has-success";
     } else {
       phoneState = "has-danger";

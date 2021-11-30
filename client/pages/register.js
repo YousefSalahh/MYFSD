@@ -18,9 +18,18 @@ export default function Register() {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
+  
   const [name, setName]=useState("");
   const [nameState,setNameState]=useState("");
 
+  const [userName, setUsername]=useState("");
+  const [userNameState,setusernameState]=useState("");
+
+  const [phone, setPhone]=useState("");
+  const [phoneState,setPhoneState]=useState("");
+
+  const [SID, setSID]=useState("");
+  const [SIDState,setSIDState]=useState("");
 
   const registerMutation = useMutateRegisterUser();
 
@@ -48,6 +57,48 @@ export default function Register() {
     setPasswordState(PasswordState);
   };
 
+  const validatePhone = (value) => {
+    let phoneState;
+    if (value.length = 11) {
+      phoneState = "has-success";
+    } else {
+      phoneState = "has-danger";
+    }
+    setPhoneState(phoneState);
+  };
+
+  const validatename = (value) => {
+    let nameState;
+    if (value.length > 0) { 
+      nameState = "has-success";
+    } else {
+      nameState = "has-danger";
+    }
+    setNameState(nameState);
+  };
+
+  
+  const validateSID = (value) => {
+    let SIDState;
+    if (value.length > 0) { 
+      SIDState = "has-success";
+    } else {
+      SIDState = "has-danger";
+    }
+    setSIDState(SIDState);
+  };
+
+  const validateuserName = (value) => {
+    let userNameState;
+    if (value.length > 0) { 
+      userNameState = "has-success";
+    } else {
+      userNameState = "has-danger";
+    }
+    setusernameState(userNameState);
+  };
+
+
   const validateConfirmPassword = (value) => {
     let confirmPasswordState;
     if (value === password && password.length > 0) {
@@ -71,7 +122,7 @@ export default function Register() {
     } else {
       validatePassword(value);
       setPassword(value);
-    }
+    } 
   };
 
   const handleSubmit = (event) => {
@@ -79,16 +130,23 @@ export default function Register() {
     validateEmail(email);
     validatePassword(password);
     validateConfirmPassword(confirmPassword);
-
+    validatePhone(phone);
+    validateSID(SID);
+    validatename(name);
+    validateuserName(userName);
     if (
       emailState === "has-success" &&
       passwordState === "has-success" &&
-      confirmPasswordState === "has-success" 
+      confirmPasswordState === "has-success" &&
+      phoneState === "has-success" &&
+      nameState === "has-success" &&
+      userNameState === "has-success" &&
+      SIDState === "has-success" 
     ) {
 
           // Call User Register Mutation 
-          await registerMutation.mutate({ email, password })
-          
+           registerMutation.mutate({ email, password , phone , SID , userName , name })
+          //await
         }
   };
 
@@ -143,6 +201,62 @@ export default function Register() {
             invalid={confirmPasswordState === "has-danger"}
           />
           <FormFeedback>Passwords don't match.</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Label className={styles.label} for="name">
+            Name:
+          </Label>
+          <Input
+            type="name"
+            name="name"
+            placeholder="name"
+            onChange={handleChange}
+            valid={confirmPasswordState === "has-success"}
+            invalid={confirmPasswordState === "has-danger"}
+          />
+          <FormFeedback>name must be entered</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Label className={styles.label} for="userName">
+            User Name:
+          </Label>
+          <Input
+            type="userName"
+            name="userName"
+            placeholder="userName2001"
+            onChange={handleChange}
+            valid={confirmPasswordState === "has-success"}
+            invalid={confirmPasswordState === "has-danger"}
+          />
+          <FormFeedback>username must be entered.</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Label className={styles.label} for="SID">
+            SID:
+          </Label>
+          <Input
+            type="SID"
+            name="SID"
+            placeholder="ex: 2329"
+            onChange={handleChange}
+            valid={confirmPasswordState === "has-success"}
+            invalid={confirmPasswordState === "has-danger"}
+          />
+          <FormFeedback>SID must be entered</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Label className={styles.label} for="phone">
+             Phone number:
+          </Label>
+          <Input
+            type="phone"
+            name="phone"
+            placeholder="01*********"
+            onChange={handleChange}
+            valid={confirmPasswordState === "has-success"}
+            invalid={confirmPasswordState === "has-danger"}
+          />
+          <FormFeedback>phone number must be of length 11 </FormFeedback>
         </FormGroup>
         
         <Button color="primary" onClick={handleSubmit}>Submit</Button>

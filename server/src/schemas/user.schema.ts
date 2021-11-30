@@ -24,7 +24,7 @@ export class User {
   dateofBirth: string;
 
   @Prop({ required: true })
-  phone: string;
+  phone: number;
 
   @Prop({ required: true })
   accountID: number;

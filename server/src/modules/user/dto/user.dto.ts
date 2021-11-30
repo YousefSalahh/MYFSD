@@ -18,10 +18,10 @@ export class registerDto {
     @IsNotEmpty()
     name: string;
   
-    @IsDate()
+    @IsNotEmpty()
     dateofBirth: string;
   
-    @Length(11)
+    @IsNotEmpty()
     phone: string ; 
   
   }

@@ -92,6 +92,7 @@ export default function Login() {
         </FormGroup>
         <Button color="primary" onClick={handleSubmit}>Submit</Button>
         <Button color="primary" onClick={handleRegister}>Sign Up</Button>
+        
       </Form>
     </div>
   );

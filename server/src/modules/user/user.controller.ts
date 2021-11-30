@@ -26,7 +26,7 @@ export class UserController {
   }
 
   //@UseGuards(AuthGuard('jwt'))
-  @Post("/register")
+  @Post('register')
   register(@Body() dto: registerDto){
     return this.userService.register(dto);
   }

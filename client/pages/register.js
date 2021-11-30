@@ -172,7 +172,7 @@ export default function Register() {
       <Form className={styles.form} onSubmit={handleSubmit}>
         <FormGroup>
           <Label className={styles.label} for="email">
-            Username
+            Email:
           </Label>
 
           <Input

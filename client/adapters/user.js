@@ -36,23 +36,26 @@ export function useMutateRegisterUser() {
   return useMutation(
     (user) => {
       const data = new FormData();
-      data.append("email", user.email);
+      data.append("email", user.GIUemail);
       data.append("password", user.password);
-      data.append("phone" , user.phone);
-      data.append("SID" , user.SID);
-      data.append("userName" , user.userName);
-      data.append("name" , user.name);
+      // data.append("phone" , user.phone);
+      // data.append("SID" , user.SID);
+      // data.append("userName" , user.userName);
+      // data.append("name" , user.name);
     
-      return apiService.post(`user/register`, data);
+      // return apiService.post(`users/register`, data);
+      return apiService.get('http://localhost:5000/users/list');
+
     },
     {
       // When mutate is called:
       onSuccess: (responseData) => {
         // Redirect to login pagere
-        Router.push('/')
+         Router.push('/')
+         console.log(responseData)
 
       },
-      onError: (e) => console.log(e.message),
+      onError: (e) => console.log(responseData),
     }
   );
 }

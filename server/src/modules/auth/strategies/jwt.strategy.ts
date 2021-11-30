@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
+import { UnauthorizedException } from '@nestjs/common';
+import { UserService } from 'src/modules/user/user.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -9,6 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreException: true,
       secretOrKey: process.env.JWT_SECRET,
+      userService: UserService
     });
   }
   /**
@@ -17,6 +20,11 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
    * @param payload
    */
   async validate(payload: any) {
+
+    const user = await this.userService.findOne({ GIUemail: payload.email });
+    if (!user || user.password !== payload.password)
+      throw new UnauthorizedException("Credentials incorrect");
+    return payload.email,payload.password;
     /*
       Each JWT has a "payload" section, which includes 
       the data we insert into the JWT object when

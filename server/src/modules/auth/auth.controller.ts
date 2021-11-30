@@ -12,6 +12,6 @@ export class AuthController {
    */
   @Post('/login')
   login(@Body() dto: AuthDto) {
-    // TODO: Add your login logic here
+    return this.authService.login(dto);
   }
 }

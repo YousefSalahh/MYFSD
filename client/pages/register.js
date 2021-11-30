@@ -114,12 +114,30 @@ export default function Register() {
     if (name === "email") {
       validateEmail(value);
       setEmail(value);
-    } else if (name === "confirm_password") {
+    } 
+    else if (name === "confirm_password") {
       validateConfirmPassword(value);
       setConfirmPassword(value);
-    } else {
+    } 
+    else if(name==="password"){
       validatePassword(value);
       setPassword(value);
+    } 
+    else if(name==="phone") {
+      validatePhone(value);
+      setPhone(value);
+    } 
+    else if(name==="SID") {
+      validateSID(value);
+      setSID(value);
+    } 
+    else if(name==="name") {
+      validatename(value);
+      setName(value);
+    } 
+    else if(name==="userName") {
+      validateuserName(value);
+      setUsername(value);
     } 
   };
 

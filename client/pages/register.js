@@ -8,8 +8,8 @@ import {
 } from "reactstrap";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
-import { useHistory } from "react-router-dom";
-import { useMutateRegisterUser } from "../adapters/user";
+import { useMutateRegisterUser } from "../adapters/user"
+import Router from 'next/router'; 
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -18,15 +18,7 @@ export default function Register() {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
-  
-
-  const [phone, setPhone] = useState("");
-
-  const [SID , setSID] = useState("");
-  const [SIDState, setSIDState] = useState("");
-
-  const [name , setName] = useState("");
-  const [username , setUserName] = useState("") ;
+  const registerMutation = useMutateRegisterUser()
 
 
   const validateEmail = (value) => {
@@ -102,10 +94,11 @@ export default function Register() {
       passwordState === "has-success" &&
       confirmPasswordState === "has-success"
     ) {
-       
-      // Call User Register Adapter
-       
-    }
+
+          // Call User Register Mutation 
+          await registerMutation.mutate({ email, password })
+          
+        }
   };
 
   return (
@@ -160,7 +153,7 @@ export default function Register() {
           />
           <FormFeedback>Passwords donnot match.</FormFeedback>
         </FormGroup>
-        <Button color="primary">Submit</Button>
+        <Button color="primary" onClick={handleSubmit}>Submit</Button>
       </Form>
     </div>
   );

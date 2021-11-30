@@ -1,21 +1,18 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Date, Document, PromiseProvider } from "mongoose";
 
-export type AccountsDocument = Account & Document;
+export type AccountsDocument = Accounts & Document;
 
 @Schema()
-export class Account {
+export class Accounts {
 
   @Prop({ required: true })
-  accountID: number;
-
+  balance: number;
+  
   @Prop({ required: true })
-  balance:number
-
-  @Prop({ required: true })
-  active: Boolean;
+  active: string;
+  
 
 
 }
-
-export const AccountSchema = SchemaFactory.createForClass(Account);
+  export const AccountSchema = SchemaFactory.createForClass(Accounts);

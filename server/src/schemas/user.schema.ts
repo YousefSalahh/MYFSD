@@ -9,6 +9,9 @@ export class User {
   name: string;
 
   @Prop({ required: true })
+  userName: string;
+
+  @Prop({ required: true })
   GIUemail: string;
 
   @Prop({ required: true })
@@ -24,10 +27,11 @@ export class User {
   phone: string;
 
   @Prop({ required: true })
-  GIUusername: string;
+  accountID: number;
 
   @Prop({ required: true })
-  accoutID: number;
+  inital_Balance: string;
+
 
 }
 

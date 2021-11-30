@@ -1,20 +1,73 @@
-import React from "react";
 import {
-  Button,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  FormFeedback,
-} from "reactstrap";
-import { useState } from "react";
-import styles from "../styles/Home.module.css";
+    Card,
+    CardBody,
+    CardTitle,
+    CardGroup,
+    CardText,
+    Container,
+    Row,
+    Col,
+    Button
+} from 'reactstrap';
 
+import axios from "axios";
+import Link from "next/link";
+
+import { useState, useEffect } from "react";
 
 
 export default function Dashboard() {
-  return <div>DASHBOARD</div>;
+   
+  const [accounts, setAccounts] = useState([]);
 
+  async function getAccounts () {
+    const response = await axios.get('https://localhost:3000/')
+    setAccounts(response)
+  }
 
+  function signout() {
+    localStorage.removeItem('jwt')
+    Router.push('/')
+  }
 
-}
+  // TODO: uncomment after setting the proper URL  
+  // useEffect(() => {
+  //   getAccounts()
+  // })
+
+      return (
+        <>
+              <div className="d-flex justify-content-between">
+                  <h1 className="p-2">Dashboard</h1>
+                  <Button color="danger" onClick={signout}>
+                    Signout
+                  </Button>
+              </div>
+              <CardGroup>
+                { 
+                  accounts.length ?
+                  accounts.map(({ balance, accountID }, i) => (
+                    <Card>
+                      <CardBody>
+                        <CardTitle tag="h5">
+                          {accountID}
+                        </CardTitle><CardText>
+                            Current Balance: {balance}
+                          </CardText>
+                          <Link href={'/transactions/'+accountID}>
+                            <Button>
+                              View Ledger
+                            </Button>
+                          </Link>
+                      </CardBody>
+                    </Card>
+                  )) : 
+                  <p className="p-2">No active accounts</p>
+                
+                }
+              </CardGroup>
+         </>   
+      )
+    }
+  
+

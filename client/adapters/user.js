@@ -51,7 +51,9 @@ export function useMutateRegisterUser() {
       // When mutate is called:
       onSuccess: (responseData) => {
         // Redirect to login pagere
-         Router.push('/')
+         //Router.push('/')
+         //responseData = 'http://localhost:3000';
+        // window.location.href = 'http://localhost:3000';
          console.log(responseData)
 
       },

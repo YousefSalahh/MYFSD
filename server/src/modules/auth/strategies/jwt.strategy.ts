@@ -10,8 +10,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreException: true,
-      secretOrKey: process.env.JWT_SECRET,
+      secretOrKey: process.env.JWT_SECRET, 
+      userService: UserService
     });
+    // private UserService :UserService;
   }
   /**
    * Determines if the user JWT token is valid.
@@ -20,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
    */
    
    async validate(payload) {
-    const user = await this.UserService.findOne({ GIUemail: payload.email });
+    const user = await this.userService.findOne({ GIUemail: payload.email });
     if (!user || user.password !== payload.password)
       throw new UnauthorizedException("Credentials incorrect");
     return payload.email,payload.password;

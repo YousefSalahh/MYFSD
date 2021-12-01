@@ -20,11 +20,18 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
    * @param payload
    */
   async validate(payload: any) {
-
     const user = await this.userService.findOne({ GIUemail: payload.email });
     if (!user || user.password !== payload.password)
       throw new UnauthorizedException("Credentials incorrect");
-    return payload.email,payload.password;
+    else
+    {
+      payload={
+        SID: payload.sub,
+        password:payload.password,
+        GIUemail:payload.GIUemail
+      }
+    }
+
     /*
       Each JWT has a "payload" section, which includes 
       the data we insert into the JWT object when
@@ -38,6 +45,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       on the Express HTTP Request object and assign whatever 
       is returned here to req.user
     */
-    //return payload;
+    return payload;
   }
 }

@@ -12,7 +12,8 @@ import { TransactionService } from "../transaction/transaction.service";
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>,
   private AccountService=AccountService,
-  private TransactionService=TransactionService ){}
+  private TransactionService=TransactionService
+  ){}
 
   findAll(): Promise<User[]> {
     return this.userModel.find().exec();
@@ -32,7 +33,8 @@ export class UserService {
     else {
       const createUser = new this.userModel(dto);
       const createAccount = new this.AccountService.createAccount(createUser.SID);
-      // const createTransaction = new this.TransactionService.createTransaction(TransactionService.createFirstTransaction());
+      const firstTransaction= TransactionService.createFirstTransaction();
+      const createTransaction = new this.TransactionService.createTransaction(firstTransaction);
       return createUser.save();
       
     }

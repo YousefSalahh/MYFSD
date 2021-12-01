@@ -47,7 +47,10 @@ export default function Login() {
 
     event.preventDefault();
     // Call User Login Adapter
-    loginMutation.mutate({ email, password }) 
+    loginMutation.mutate({ 
+      "email": email,
+      "password": password 
+    }); 
     router.push('/Dashboard')
   };
 

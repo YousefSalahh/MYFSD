@@ -29,14 +29,13 @@ export class TransactionService {
       var mm = String(today.getMonth() + 1).padStart(2, '1'); //January is 0!
       var yyyy = today.getFullYear();
       //today = mm + '/' + dd + '/' + yyyy;
-     
+      //document.write(today);
+
        const dto = {
           debitAmount:100,
           transactionName: "first $100",
           creditAmount:0,
           date:today
-
-
        }
       return dto;
     }

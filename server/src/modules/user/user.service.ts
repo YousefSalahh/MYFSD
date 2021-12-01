@@ -33,7 +33,7 @@ export class UserService {
     else {
       const createUser = new this.userModel(dto);
       const createAccount = new this.AccountService.createAccount(createUser.SID);
-      const firstTransaction= TransactionService.createFirstTransaction();
+      const firstTransaction= new this.TransactionService.createFirstTransaction();
       const createTransaction = new this.TransactionService.createTransaction(firstTransaction);
       return createUser.save();
       

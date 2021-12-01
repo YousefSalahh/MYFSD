@@ -6,4 +6,8 @@ export class AuthDto {
 
   @IsNotEmpty()
   password: string;
+
+  @IsNotEmpty()
+  SID:number;
+
 }

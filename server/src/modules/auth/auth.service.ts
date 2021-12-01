@@ -21,8 +21,10 @@ export class AuthService {
    * Determines if the user credentials provided are correct
    * @param dto
    */
-  login(dto: AuthDto) {
+   
+  async login(dto: AuthDto) {
     const payload={
+      sub:dto.SID,
       GIUemail:dto.GIUemail,
       password:dto.password
     }

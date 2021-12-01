@@ -38,6 +38,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       on the Express HTTP Request object and assign whatever 
       is returned here to req.user
     */
-    return payload;
+    //return payload;
   }
 }

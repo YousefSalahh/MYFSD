@@ -31,9 +31,9 @@ function signout() {
 }
 
 // TODO: uncomment after setting the proper URL  
-// useEffect(() => {
-//   getAccounts()
-// })
+useEffect(() => {
+  getAccounts()
+})
 
     return (
       <>

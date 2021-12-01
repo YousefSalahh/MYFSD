@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import { useMutateLoginUser } from "../adapters/user"
 import styles from "../styles/Home.module.css";
-import { useMutateLoginUser }  from "../adapters/user";
+import router from "next/router";
 
 
 
@@ -48,13 +48,13 @@ export default function Login() {
     event.preventDefault();
     // Call User Login Adapter
     loginMutation.mutate({ email, password }) 
-
+    router.push('/Dashboard')
   };
 
   
    const handleRegister=(event)=>
   {
-  
+    router.push('/register')
   };
 
 
@@ -86,7 +86,7 @@ export default function Login() {
             type="password"
             name="password"
             id="password"
-            placeholder="****"
+            placeholder="**"
             onChange={handleChange}
           />
         </FormGroup>

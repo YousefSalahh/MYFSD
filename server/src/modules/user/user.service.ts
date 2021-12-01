@@ -4,11 +4,15 @@ import { Model } from "mongoose";
 import { User,UserDocument } from "src/schemas/user.schema";
 import { BadRequestException } from "@nestjs/common";
 import { registerDto } from "./dto/user.dto";
+import { AccountService } from "../account/account.service";
+import { TransactionService } from "../transaction/transaction.service";
 
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>,
+  private AccountService=AccountService,
+  private TransactionService=TransactionService ){}
 
   findAll(): Promise<User[]> {
     return this.userModel.find().exec();
@@ -26,8 +30,10 @@ export class UserService {
       throw new BadRequestException("Email try another");
       
     else {
-      const newUser = new this.userModel(dto);
-      return newUser.save();
+      const createUser = new this.userModel(dto);
+      const createAccount = new this.AccountService.createAccount(createUser.SID);
+      // const createTransaction = new this.TransactionService.createTransaction(TransactionService.createFirstTransaction());
+      return createUser.save();
       
     }
   }

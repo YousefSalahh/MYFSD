@@ -14,4 +14,9 @@ export class TransactionController {
     return this.transactionService.findTransaction(accountID);
 
   }
+
+  @UseGuards()
+  @Post('/createTransaction')
+  createTransaction(@Body() dto:TransactionDto):any{
+    return this.transactionService.createTransaction(dto);  }
 }

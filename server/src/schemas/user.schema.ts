@@ -29,9 +29,6 @@ export class User {
   @Prop({ required: false })
   accountID: number;
 
-  @Prop({ required: false })
-  inital_Balance: string;
-
 
 }
 

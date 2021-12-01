@@ -12,13 +12,16 @@ export class AccountController {
   @UseGuards()
   @Get(':SID')
   viewDashboard(@Param('SID')SID: number): any {
-    return this.accountService.findAccount(SID);
+    return this.accountService.findAccounts(SID);
   }
 
   @UseGuards()
   @Post(':SID')
-      createAccount(@Body('SID')dto:AccountDto):any{
-      return this.accountService.createAccount(dto);
-    }
+      createAccount(@Body('SID')SID:number):any{
+      return this.accountService.createAccount(SID);
+  }
+
+
+
 }
 

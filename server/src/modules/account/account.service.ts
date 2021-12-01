@@ -16,12 +16,19 @@ export class AccountService {
   
   
 
-  findAccount(SID:number): Promise<Account[]> {
+  findAccounts(SID:number): Promise<Account[]> {
     return this.accountModel.find({SID:SID}).exec();
   }
 
-  createAccount(dto:AccountDto):Promise<Account>{
-      const createAccount= new this.accountModel({dto});
+;
+
+  createAccount(SID:number):Promise<Account>{
+      const accountID=Math.random();
+      const createAccount= new this.accountModel({
+        balance:100,
+        active:"active",
+        accountID:accountID
+      });
       return createAccount.save();
 
   }

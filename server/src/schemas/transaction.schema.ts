@@ -5,8 +5,9 @@ export type TransactionsDocument = Transactions & Document;
 
 @Schema()
 export class Transactions {
+  
   @Prop({ required: true })
-  transactionID: number;
+  transactionName: string;
 
   @Prop({required:true})
   accountID:number;
@@ -20,8 +21,11 @@ export class Transactions {
   @Prop({ required: true })
   creditAmount: number;
 
+  @Prop({ required: false })
+  from: string;
   
-
+  @Prop({ required: false })
+  to: string;
 
 }
 

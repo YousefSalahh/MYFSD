@@ -10,6 +10,7 @@ export class AuthController {
    * API endpoint handler for user login
    * @param dto
    */
+
   @Post('/login')
   login(@Body() dto: AuthDto) {
     return this.authService.login(dto);

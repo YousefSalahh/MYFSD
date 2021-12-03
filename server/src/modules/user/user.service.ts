@@ -5,7 +5,7 @@ import { User,UserDocument } from "src/schemas/user.schema";
 import { BadRequestException } from "@nestjs/common";
 import { registerDto } from "./dto/user.dto";
 //import { AccountService } from "../account/account.service";
-import { TransactionService } from "../transaction/transaction.service";
+//import { TransactionService } from "../transaction/transaction.service";
 
 
 @Injectable()

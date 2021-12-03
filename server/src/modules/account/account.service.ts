@@ -5,8 +5,8 @@ import { InjectModel } from "@nestjs/mongoose";
 import { UserSchema } from "src/schemas/user.schema";
 import { AccountDto } from "./dto/account.Dto";
 import { Account, AccountsDocument } from "src/schemas/account.schema";
-
-
+import { HttpException } from "@nestjs/common";
+import { HttpStatus } from "@nestjs/common";
 @Injectable()
 export class AccountService {
   constructor(
@@ -49,5 +49,22 @@ createFirstAccount(dto:AccountDto){
     return createAccount.save();
 
 }
+findOnebySID({ SID }): Promise<Account> {
+  console.log(SID);
+  return this.accountModel.findOne({ SID: SID }).exec();
+}
+postAccountbyID(SID: number, dto: AccountDto) {
+  const postAccbySID = this.findOnebySID({SID: dto.SID});
+  if (!postAccbySID) {
+    throw new HttpException('not cannot be posted', HttpStatus.NOT_FOUND);
+  }
+  else {
+    const firstAcc = new this.accountModel(dto);
+    return firstAcc.save();
+
+  }
+}
+
+
 
 }

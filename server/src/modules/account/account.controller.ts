@@ -32,10 +32,20 @@ export class AccountController {
       return this.accountService.createAccount(SID);
   } 
   */
-  @Post(":SID")
+ /*
+  @Post("/:SID")
   CreateAccount(@Param("SID") SID: number): any {
     return this.accountService.createAccount(SID);  
   }
-
+/*
+  async postAccountbyID(@Body() dto: AccountDto, @Param('SID') SID: number) {
+    return this.accountService.postAccountbyID(Number(SID), dto);
+  }
+*/
+  
+  @Post('/:SID')  
+  postAccountbyID(@Body() dto: AccountDto , @Param('SID') SID : number) : any {
+    return this.accountService.postAccountbyID(Number(SID), dto)
+  }
 
 }

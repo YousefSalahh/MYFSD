@@ -1,15 +1,41 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthDto } from './dtos/auth.dto';
+import { UserService } from "../user/user.service";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { UserDocument,User } from "src/schemas/user.schema";
+import { JwtStrategy } from "./strategies/jwt.strategy";
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor( private jwtService: JwtService,
+    private UserService: UserService,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
 
+    ) {}
   /**
    * Determines if the user credentials provided are correct
    * @param dto
    */
+
+   async validateUser(GIUemail: string, pass: string): Promise<any> {
+    const user = await this.UserService.findOne({GIUemail});
+    if (user && user.password === pass) {
+      const { password, ...result } = user;
+      return result;
+    }
+    return null;
+  }
+
+  async login(dto: AuthDto) {
+    const payload = { GIUemail: dto.GIUemail, sub: dto.SID };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
+  
+  /*
   login(dto: AuthDto) {
     /* 
       TODO: Add your login logic here to return
@@ -22,6 +48,11 @@ export class AuthService {
       a payload object contain certain "claims".
       As such, it's recommended to create a property
       called "sub" in payload which maps to the user id.
+  }
     */
+  
+  findOne({ GIUemail }): Promise<User> {
+    console.log(GIUemail);
+    return this.userModel.findOne({ GIUemail: GIUemail }).exec();
   }
 }

@@ -1,8 +1,8 @@
-import { Body, Controller, Post ,Request} from '@nestjs/common';
-import { AuthDto } from './dtos/auth.dto';
-import { AuthService } from './auth.service';
+import { Body, Controller, Post, Request } from "@nestjs/common";
+import { AuthDto } from "./dtos/auth.dto";
+import { AuthService } from "./auth.service";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(private authService: AuthService) {}
 
@@ -11,9 +11,8 @@ export class AuthController {
    * @param dto
    */
 
-  @Post('/login')
-  async login(@Body() dto:AuthDto) {
+  @Post("/login")
+  async login(@Body() dto: AuthDto) {
     return this.authService.login(dto);
   }
-
 }

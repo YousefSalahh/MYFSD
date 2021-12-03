@@ -5,14 +5,16 @@ export type TransactionsDocument = Transactions & Document;
 
 @Schema()
 export class Transactions {
-  
   @Prop({ required: true })
   transactionName: string;
 
-  @Prop({type: Number , required:true})
+  @Prop({ type: Number, required: true })
   accountID: number;
 
-  @Prop({  type: Date, required: true })
+  // @Prop({ ref: "users", type: Types.ObjectId, required: true })
+  // accountID: Types.ObjectId;
+
+  @Prop({ type: Date, required: true })
   dateOfToday: Date;
 
   @Prop({ required: true })
@@ -23,10 +25,9 @@ export class Transactions {
 
   @Prop({ required: false })
   from: string;
-  
+
   @Prop({ required: false })
   to: string;
-
 }
 
-export const TransactionSchema = SchemaFactory.createForClass(Transactions)
+export const TransactionSchema = SchemaFactory.createForClass(Transactions);

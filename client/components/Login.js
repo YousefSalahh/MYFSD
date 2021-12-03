@@ -42,6 +42,11 @@ export default function Login() {
     // Call User Login Adapter
   };
 
+  const handleReg = (event) => {
+    event.preventDefault();
+    window.location.replace("http://localhost:3000/register")
+  };
+
   return (
     <div className={styles.App}>
       <h2>Sign In</h2>
@@ -74,7 +79,10 @@ export default function Login() {
             onChange={handleChange}
           />
         </FormGroup>
-        <Button color="primary">Submit</Button>
+        <Button color="primary">Submit</Button> 
+        <p>
+          </p>
+        <Button color="primary" onClick={handleReg}>Register</Button>
       </Form>
     </div>
   );

@@ -9,11 +9,11 @@ export class Transactions {
   @Prop({ required: true })
   transactionName: string;
 
-  @Prop({required:true})
-  accountID:number;
+  @Prop({type: Number , required:true})
+  accountID: number;
 
-  @Prop({ required: true })
-  dateOfToday: string;
+  @Prop({  type: Date, required: true })
+  dateOfToday: Date;
 
   @Prop({ required: true })
   debitAmount: number;

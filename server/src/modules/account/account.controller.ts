@@ -10,17 +10,32 @@ export class AccountController {
 
 
   //@UseGuards()
-  @Get(':SID')
+  @Get('/:SID')
   viewDashboard(@Param('SID')SID: number): any {
     return this.accountService.findAccounts(SID);
   }
+/*
+  @Post('/createAccount')
+  createFirstAccount(@Body() dto:AccountDto ) {
+      return this.accountService.createFirstAccount(dto);
+  } */
+/*
+  @Post(":SID")
+  CreateAccount(@Param("SID") SID: number): any {
+    return this.accountService.createAccount(SID);  
+  } */
 
   //@UseGuards()
-  @Post(':SID')
-      createAccount(@Body('SID')SID:number):any{
+  /*
+  @Post('/:SID')
+      createAccount(@Body(/*'SID')SID:number):any{
       return this.accountService.createAccount(SID);
+  } 
+  */
+  @Post(":SID")
+  CreateAccount(@Param("SID") SID: number): any {
+    return this.accountService.createAccount(SID);  
   }
-
 
 
 }

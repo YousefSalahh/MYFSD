@@ -21,6 +21,12 @@ export class AccountService {
   }
 
 ;
+/*
+createFirstAccount(dto:AccountDto){
+  const newAccount= new this.accountModel(dto);
+  return newAccount.save()
+
+};
 
   createAccount(SID:number):Promise<Account>{
       const accountID=Math.random();
@@ -32,7 +38,16 @@ export class AccountService {
       return createAccount.save();
 
   }
+*/
+  createAccount(SID:number):Promise<Account>{
+    const accountID=Math.random();
+    const createAccount= new this.accountModel({
+      active:"active",
+      accountID:accountID,
+      SID:SID
+    });
+    return createAccount.save();
 
-  
+}
 
 }

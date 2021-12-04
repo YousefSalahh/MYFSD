@@ -43,7 +43,7 @@ export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Call User Login Adapter
-    loginMutation.mutate({ email, password })
+    loginMutation.mutate({ GIUemail: email, password })
   };
 
   const handleReg = (event) => {

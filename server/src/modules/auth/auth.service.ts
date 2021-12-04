@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   async login(dto: AuthDto) {
-    const payload = { GIUemail: dto.GIUemail, sub: dto.SID };
+    const payload = { GIUemail: dto.GIUemail };
     return {
       access_token: this.jwtService.sign(payload),
     };
@@ -52,7 +52,6 @@ export class AuthService {
     */
 
   findOne({ GIUemail }): Promise<User> {
-    console.log(GIUemail);
     return this.userModel.findOne({ GIUemail: GIUemail }).exec();
   }
 }

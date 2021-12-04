@@ -14,22 +14,23 @@ import axios from "axios";
 import Link from "next/link";
 
 import { useState, useEffect } from "react";
-
+import { useRouter } from 'next/router';
 
 export default function Dashboard() {
  
-const [accounts, setAccounts] = useState([]);
-const { SID } = router.query
+  const [accounts, setAccounts] = useState([]);
+  const router = useRouter();
+  const { SID } = router.query
 
-async function getAccounts () {
-  const response = await axios.get('https://localhost:5000/account' + {SID})
-  setAccounts(response)
-}
+  async function getAccounts () {
+    const response = await axios.get('https://localhost:5000/account' + {SID})
+    setAccounts(response)
+  }
 
-function signout() {
-  localStorage.removeItem('jwt')
-  Router.push('/')
-}
+  function signout() {
+    localStorage.removeItem('jwt')
+    Router.push('/')
+  }
 
 // TODO: uncomment after setting the proper URL  
     useEffect(() => {

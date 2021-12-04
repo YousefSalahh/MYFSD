@@ -18,13 +18,14 @@ export function useMutateLoginUser() {
       const data = new FormData();
       data.append("email", user.email);
       data.append("password", user.password);
-      return axios.post(`http://localhost:5000/auth/login`, data);
+      return axios.post(`/auth/login`, data);
     },
     {
       // When mutate is called:
       onSuccess: (responseData) => {
         // Store Token in local storage
-        localStorage.setItem('jwt', responseData)
+        localStorage.setItem('jwt', responseData.data.access_token)
+        Router.reload()
       },
       onError: (e) => console.log(e.message),
     }

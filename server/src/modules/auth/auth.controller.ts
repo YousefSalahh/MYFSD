@@ -12,7 +12,10 @@ export class AuthController {
    */
 
   @Post("/login")
-  async login(@Body() dto: AuthDto) {
-    return this.authService.login(dto);
+  async login(
+    @Body('GIUemail') GIUemail: AuthDto['GIUemail'],
+    @Body('password') password: AuthDto['password']
+  ) {
+    return this.authService.login({ GIUemail, password });
   }
 }

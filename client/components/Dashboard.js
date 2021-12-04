@@ -16,26 +16,35 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
 
+// export async function getServerSideProps(context) {
+//   return {
+//     props: {
+//       params: context.params
+//     }, 
+//   }
+// }
 export default function Dashboard() {
  
   const [accounts, setAccounts] = useState([]);
   const router = useRouter();
-  const { SID } = router.query
+  const  SID  = localStorage.getItem("SID")
 
   async function getAccounts () {
-    const response = await axios.get('https://localhost:5000/account' + {SID})
-    setAccounts(response)
+    const response = await axios.get(`/account/${SID}`)
+    setAccounts(response.data)
   }
 
   function signout() {
     localStorage.removeItem('jwt')
-    Router.push('/')
+    localStorage.removeItem('GIUemail')
+    localStorage.removeItem('SID')
+    router.reload()
   }
 
 // TODO: uncomment after setting the proper URL  
     useEffect(() => {
       getAccounts()
-    })
+    }, [])
 
     return (
       <>
@@ -56,7 +65,7 @@ export default function Dashboard() {
                       </CardTitle><CardText>
                           Current Balance: {balance}
                         </CardText>
-                        <Link href={'/transactions/'+accountID}>
+                        <Link href={'/transaction/'+accountID}>
                           <Button>
                             View Ledger
                           </Button>

@@ -14,17 +14,22 @@ export function useFetchUser(userId) {
 export function useMutateLoginUser() {
 
   return useMutation(
-    (user) => {
-      const data = new FormData();
-      data.append("email", user.email);
-      data.append("password", user.password);
-      return axios.post(`/auth/login`, data);
+    ({ GIUemail, password }) => {
+      // const data = new FormData();
+      // data.append("GIUemail", user.GIUemail);
+      // data.append("password", user.password);
+      return axios.post(`/auth/login`, {
+        GIUemail,
+        password
+      });
     },
     {
       // When mutate is called:
       onSuccess: (responseData) => {
         // Store Token in local storage
         localStorage.setItem('jwt', responseData.data.access_token)
+        localStorage.setItem('GIUemail', responseData.data.GIUemail)
+        localStorage.setItem('SID', responseData.data.SID)
         Router.reload()
       },
       onError: (e) => console.log(e.message),

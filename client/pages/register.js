@@ -12,7 +12,7 @@ import { useMutateRegisterUser } from "../adapters/user"
 import Router from 'next/router'; 
 
 export default function Register() {
-  const [email, setEmail] = useState("");
+  const [GIUemail, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailState, setEmailState] = useState("");
@@ -162,7 +162,7 @@ export default function Register() {
     ) {
 
           // Call User Register Mutation 
-           registerMutation.mutate({ email, password , phone , SID , userName , name })
+           registerMutation.mutate({ GIUemail, password , phone , SID , userName , name })
           //await  
           window.location.replace("http://localhost:3000")
 

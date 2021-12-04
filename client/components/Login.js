@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import { useMutateLoginUser } from "../adapters/user"
 import styles from "../styles/Home.module.css";
+import router from "next/router";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -48,7 +49,7 @@ export default function Login() {
 
   const handleReg = (event) => {
     event.preventDefault();
-    window.location.replace("http://localhost:3000/register")
+    router.replace("/register")
   };
 
   return (

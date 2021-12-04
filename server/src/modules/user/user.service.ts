@@ -19,13 +19,13 @@ export class UserService {
     return this.userModel.find().exec();
   }
 
-  findOne({ GIUemail }): Promise<User> {
+  async findOne({ GIUemail }): Promise<User> {
     console.log(GIUemail);
-    return this.userModel.findOne({ GIUemail: GIUemail }).exec();
+    return await this.userModel.findOne({ GIUemail: GIUemail }).exec();
   }
 
   async register(dto : registerDto) {
-    const user = await this.findOne({ GIUemail: dto.GIUemail });
+    const user = await this.userModel.findOne({ GIUemail: dto.GIUemail });
 
     if(user) 
       throw new BadRequestException("Email try another");

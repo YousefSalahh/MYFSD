@@ -10,7 +10,7 @@ export class AccountController {
 
 
   //@UseGuards()
-  @Get('/:SID')
+  @Get(':SID')
   viewDashboard(@Param('SID')SID: number): any {
     return this.accountService.findAccounts(SID);
   }
@@ -44,8 +44,8 @@ export class AccountController {
 */
   
   @Post('/:SID')  
-  postAccountbyID(@Body() dto: AccountDto , @Param('SID') SID : number) : any {
-    return this.accountService.postAccountbyID(Number(SID), dto)
+  postAccountbyID(@Body() dto: AccountDto) : any {
+    return this.accountService.postAccountbyID(dto)
   }
 
 }

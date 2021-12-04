@@ -22,7 +22,6 @@ export class TransactionService {
   }
 
   createTransaction(dto: TransactionDto): Promise<Transactions> {
-    console.log(dto);
     const transaction = new this.transactionModel(dto);
     return transaction.save();
   }
@@ -31,19 +30,16 @@ export class TransactionService {
     debitAmount: number;
     transactionName: string;
     creditAmount: number;
-    date: Date;
+    dateOfToday: Date;
   } {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "1"); //January is 0!
-    var yyyy = today.getFullYear();
 
     const dto = {
       debitAmount: 100,
       transactionName: "first $100",
       creditAmount: 0,
-      date: today,
+      dateOfToday: new Date(),
     };
+    
     return dto;
   }
 }

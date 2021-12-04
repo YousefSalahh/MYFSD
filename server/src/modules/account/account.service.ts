@@ -17,7 +17,7 @@ export class AccountService {
   
 
   findAccounts(SID:number): Promise<Account[]> {
-    return this.accountModel.find({SID:SID}).exec();
+    return this.accountModel.find({ SID }).exec();
   }
 
 ;
@@ -53,16 +53,16 @@ findOnebySID({ SID }): Promise<Account> {
   console.log(SID);
   return this.accountModel.findOne({ SID: SID }).exec();
 }
-postAccountbyID(SID: number, dto: AccountDto) {
-  const postAccbySID = this.findOnebySID({SID: dto.SID});
-  if (!postAccbySID) {
-    throw new HttpException('not cannot be posted', HttpStatus.NOT_FOUND);
-  }
-  else {
-    const firstAcc = new this.accountModel(dto);
-    return firstAcc.save();
+postAccountbyID(dto: AccountDto) {
+  // const postAccbySID = this.findOnebySID({SID: dto.SID});
+  // if (!postAccbySID) {
+  //   throw new HttpException('not cannot be posted', HttpStatus.NOT_FOUND);
+  // }
+  // else {
+  const firstAcc = new this.accountModel(dto);
+  return firstAcc.save();
 
-  }
+  // }
 }
 
 

@@ -47,7 +47,7 @@ export default function transactions({ params }) {
     <thead>
       <tr>
         <th>
-          #Transaction ID
+          Transaction Name 
         </th>
         <th>
           Date
@@ -58,19 +58,19 @@ export default function transactions({ params }) {
         <th>
           Credit Amount
         </th>
-        <th>
+        {/* <th>
           Balance
-        </th>
+        </th> */}
       </tr>
     </thead>
     <tbody>
       { transactions.map((data, i) => (
           <tr key={`trasnaction-${i}`}>
-            <th scope="row">{data.transID}</th>
-            <td>{data.date}</td>
-            <td>{data.debit}</td>
-            <td>{data.credit}</td>
-            <td>{data.balance}</td>
+            <th scope="row">{data.transactionName}</th>
+            <td>{data.dateOfToday}</td>
+            <td>{data.debitAmount}</td>
+            <td>{data.creditAmount}</td>
+            {/* <td>{data.balance}</td> */}
         </tr>
       )) }
 

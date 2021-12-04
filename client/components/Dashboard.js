@@ -4,9 +4,8 @@ import {
   CardTitle,
   CardGroup,
   CardText,
-  Container,
-  Row,
-  Col,
+  Navbar,
+  NavbarText,
   Button
 } from 'reactstrap';
 
@@ -15,7 +14,6 @@ import Link from "next/link";
 
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
-
 // export async function getServerSideProps(context) {
 //   return {
 //     props: {
@@ -48,13 +46,15 @@ export default function Dashboard() {
 
     return (
       <>
-            <div className="d-flex justify-content-between">
-                <h1 className="p-2">Dashboard</h1>
-                <Button color="danger" onClick={signout}>
-                  Signout
-                </Button>
-            </div>
-            <CardGroup>
+              <Navbar color="dark" dark>
+                  <h1 className="p-2 text-white">Dashboard</h1>
+                  <NavbarText>
+                  <Button color="danger" onClick={signout}>
+                      Signout
+                  </Button>
+                  </NavbarText>
+              </Navbar>
+              <CardGroup>
               { 
                 accounts.length ?
                 accounts.map(({ balance, accountID }, i) => (

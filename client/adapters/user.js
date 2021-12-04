@@ -1,6 +1,6 @@
 import apiService from "../services/apiService";
 import { useQuery, useQueryClient, useMutation } from "react-query";
-
+import axios from "axios";
 import Router from 'next/router'
 
 
@@ -18,7 +18,7 @@ export function useMutateLoginUser() {
       const data = new FormData();
       data.append("email", user.email);
       data.append("password", user.password);
-      return apiService.post(`user/login`, data);
+      return axios.post(`http://localhost:5000/auth/login`, data);
     },
     {
       // When mutate is called:
@@ -53,7 +53,7 @@ export function useMutateRegisterUser() {
         // Redirect to login pagere
         // Router.push('/')
          //responseData = 'http://localhost:3000';
-         window.location.replace("http://localhost:3000")
+        //  window.location.replace("http://localhost:3000")
          console.log(responseData)
 
       },

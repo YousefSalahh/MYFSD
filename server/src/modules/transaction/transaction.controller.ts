@@ -8,10 +8,9 @@ export class TransactionController {
   constructor(private transactionService: TransactionService) {}
 
   // @UseGuards()
-  @Get("/:accountID")
-  transaction(@Param("accountID") accountID: number): any {
-    console.log(accountID);
-
+  @Get(":accountID")
+  transaction(@Param("accountID") accountID: number): any { 
+    if (!accountID) return console.log('no params provided')
     return this.transactionService.findTransaction(accountID);
   }
 

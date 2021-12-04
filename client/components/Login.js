@@ -7,12 +7,15 @@ import {
   FormFeedback,
 } from "reactstrap";
 import { useState } from "react";
+import { useMutateLoginUser } from "../adapters/user"
 import styles from "../styles/Home.module.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailState, setEmailState] = useState("");
+
+  const loginMutation = useMutateLoginUser() ;
 
   const validateEmail = (value) => {
     const emailRegex =
@@ -40,6 +43,7 @@ export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Call User Login Adapter
+    loginMutation.mutate({ email, password })
   };
 
   const handleReg = (event) => {

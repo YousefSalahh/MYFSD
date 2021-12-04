@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 import { useMutateRegisterUser } from "../adapters/user"
-import Router from 'next/router'; 
+import router from "next/router";
 
 export default function Register() {
   const [GIUemail, setEmail] = useState("");
@@ -163,8 +163,7 @@ export default function Register() {
 
           // Call User Register Mutation 
            registerMutation.mutate({ GIUemail, password , phone , SID , userName , name })
-          //await  
-          window.location.replace("http://localhost:3000")
+           router.replace("/")
 
         }
   };

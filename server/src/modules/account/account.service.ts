@@ -40,17 +40,16 @@ createFirstAccount(dto:AccountDto){
   }
 */
   createAccount(SID:number):Promise<Account>{
-    const accountID=Math.random();
+    const accountID=Math.ceil(Math.random()*1000);
     const createAccount= new this.accountModel({
-      active:"active",
-      accountID:accountID,
-      SID:SID
+      balance: 100,
+      accountID,
+      SID
     });
     return createAccount.save();
 
 }
 findOnebySID({ SID }): Promise<Account> {
-  console.log(SID);
   return this.accountModel.findOne({ SID: SID }).exec();
 }
 postAccountbyID(dto: AccountDto) {

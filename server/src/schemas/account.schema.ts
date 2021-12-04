@@ -8,10 +8,14 @@ export class Account {
   @Prop({ required: true })
   balance: number;
 
-  @Prop({ required: true, default: true })
+  @Prop({ default: true })
   active: boolean;
 
   @Prop({ required: true })
   accountID: number;
+
+  @Prop({ required: true })
+  SID: number;
+
 }
 export const AccountSchema = SchemaFactory.createForClass(Account);

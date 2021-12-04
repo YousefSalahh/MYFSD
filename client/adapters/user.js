@@ -50,7 +50,7 @@ export function useMutateRegisterUser() {
       data.append("name" , user.name);
     
      // return apiService.post(`users/register`, data);
-      return apiService.post(`http://localhost:5000/users/register` , user);
+      return apiService.post(`/users/register` , user);
 
     },
     {

@@ -4,15 +4,16 @@ import { Model } from "mongoose";
 import { User,UserDocument } from "src/schemas/user.schema";
 import { BadRequestException } from "@nestjs/common";
 import { registerDto } from "./dto/user.dto";
-//import { AccountService } from "../account/account.service";
-//import { TransactionService } from "../transaction/transaction.service";
+import { AccountService } from "../account/account.service";
+import { TransactionService } from "../transaction/transaction.service";
 
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>,
-  //private AccountService=AccountService,
-  //private TransactionService=TransactionService
+  constructor(@InjectModel(User.name) 
+    private userModel: Model<UserDocument>,
+    private AccountService: AccountService,
+    private TransactionService: TransactionService
   ){}
 
   findAll(): Promise<User[]> {
@@ -32,9 +33,11 @@ export class UserService {
       
     else {
       const createUser = new this.userModel(dto);
-     // const createAccount = new this.AccountService.createAccount(createUser.SID);
-     // const firstTransaction= new this.TransactionService.createFirstTransaction();
-     // const createTransaction = new this.TransactionService.createTransaction(firstTransaction);
+      
+      const createAccount = await this.AccountService.createAccount(dto.SID);
+      const firstTransaction = this.TransactionService.createFirstTransaction();
+      this.TransactionService.createTransaction({ ...firstTransaction, accountID: createAccount.accountID });
+      
       return createUser.save();
       
     }

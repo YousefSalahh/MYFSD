@@ -4,11 +4,18 @@ import { User, UserSchema } from '@sp/schemas';
 import { TransactionModule } from '../transaction/transaction.module';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
+import { AccountModule } from '../account/account.modules';
+import { AccountService } from '../account/account.service';
+import { Account, AccountSchema } from "src/schemas/account.schema";
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),TransactionModule],
-  exports: [UserService],
-  controllers: [UserController],
-  providers: [UserService],
+  imports: [ 
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: Account.name, schema: AccountSchema }]),
+    TransactionModule 
+  ],
+  exports: [ UserService ],
+  controllers: [ UserController ],
+  providers: [ UserService, AccountService ],
 })
 export class UsersModule {}

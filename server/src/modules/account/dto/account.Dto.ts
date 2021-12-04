@@ -5,7 +5,7 @@ export class AccountDto {
   accountID: string;
 */
   @IsNotEmpty()
-  SID: string;
+  SID: number;
 
   @IsNotEmpty()
   balance: number;

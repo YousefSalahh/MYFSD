@@ -10,6 +10,7 @@ import { AccountService } from "../account/account.service";
 import { Account, AccountSchema } from "src/schemas/account.schema";
 import { Transactions, TransactionSchema } from "src/schemas/transaction.schema";
 import { TransactionService } from "../transaction/transaction.service";
+import { AccountModule } from "../account/account.module";
 
 @Module({
   imports: [
@@ -22,8 +23,8 @@ import { TransactionService } from "../transaction/transaction.service";
     MongooseModule.forFeature([{ name: Transactions.name, schema: TransactionSchema }]),
     
   ],
-  controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, UserService, AccountService, TransactionService ],
+  controllers: [ AuthController ],
+  providers: [ AuthService, JwtStrategy, UserService, TransactionService ],
   exports: [ AuthService ],
 })
 export class AuthModule {}

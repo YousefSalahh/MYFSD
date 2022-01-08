@@ -6,9 +6,12 @@ import {
   CardText,
   Navbar,
   NavbarText,
-  Button
+  Button,
+  NavItem,
+  NavLink
 } from 'reactstrap';
 
+import apiService from "../services/apiService";
 import axios from "axios";
 import Link from "next/link";
 
@@ -32,6 +35,10 @@ export default function Dashboard() {
     setAccounts(response.data)
   }
 
+  async function addAccount( ) {
+    const res = await axios.post(`/account/${SID}`)
+  }
+
   function signout() {
     localStorage.removeItem('jwt')
     localStorage.removeItem('GIUemail')
@@ -48,6 +55,11 @@ export default function Dashboard() {
       <>
               <Navbar color="dark" dark>
                   <h1 className="p-2 text-white">Dashboard</h1>
+                  <NavItem>
+                    <NavLink className="mx-3" onClick={addAccount}>
+                          Add Account
+                    </NavLink>
+                  </NavItem>
                   <NavbarText>
                   <Button color="danger" onClick={signout}>
                       Signout

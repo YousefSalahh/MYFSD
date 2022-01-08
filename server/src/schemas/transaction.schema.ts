@@ -1,3 +1,4 @@
+
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Date, Document } from "mongoose";
 
@@ -24,10 +25,10 @@ export class Transactions {
   creditAmount: number;
 
   @Prop({ required: false })
-  from: string;
+  from: number;
 
   @Prop({ required: false })
-  to: string;
+  to: number;
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(Transactions);

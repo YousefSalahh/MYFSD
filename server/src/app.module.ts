@@ -6,6 +6,8 @@ import { AccountModule } from "./modules/account/account.module";
 import { TransactionModule } from "./modules/transaction/transaction.module";
 import { ConfigModule } from "@nestjs/config";
 
+require('dotenv').config()
+
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.MONGO_URL),

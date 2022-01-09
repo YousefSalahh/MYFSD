@@ -8,7 +8,7 @@ import { AccountService } from "../account/account.service";
 import { JwtStrategy } from "./strategy/Jwtstrategy";
 
 @Injectable()
-export class  externalService {
+export class  ExternalService {
     constructor(
         private transactionService: TransactionService,
         private JwtStrategy:JwtStrategy,
@@ -25,7 +25,7 @@ async createExternalTransaction(authtoken:string , port:number, receiverAccNumbe
     const ngrok = require('ngrok');
     const link =  ngrok.connect({
       proto: 'http', 
-      addr: port, 
+      address: port, 
       authtoken: authtoken 
         
     })
@@ -59,6 +59,9 @@ async createExternalTransaction(authtoken:string , port:number, receiverAccNumbe
             const insert5dollars:TransactionDto = {
             transactionName : "5-Dollar-Fee" ,accountID: accountID,amount: 5,type : "debit" , dateOfToday:todayDATE ,description:description}
             const post5Dollars = await this.transactionService.createTransaction(insert5dollars);
+
+            this.accountService.updateSenderBalance(accountID , amount);
+            this.accountService.updateSenderBalance(accountID , 5);
             }
         } 
     )
@@ -81,7 +84,7 @@ async recieveExternalTransfer(dto : externalDto){
                 transactionName : "External transfer" ,
                 description : dto.description
                 }
-
+                this.accountService.updateRecieverBalance((dto).receiverAccNumber , (dto).amount);
                 return  await this.transactionService.createTransaction(initiateTransaction);
             }
             else {

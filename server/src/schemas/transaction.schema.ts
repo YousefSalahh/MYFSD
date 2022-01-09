@@ -18,7 +18,6 @@ export class Transactions {
   @Prop({ type: Date, required: true })
   dateOfToday: Date;
 
-  
   @Prop({ required: true })
   amount: number;
 
@@ -31,11 +30,6 @@ export class Transactions {
   @Prop({ required: false })  //account ID of reciever
   to: number;
 
-  @Prop({ required: false })  //for esxternal transfers
-  bankName: string;
-
-  // @Prop({ required: true })
-  // debitAmount: number;
 
 }
 

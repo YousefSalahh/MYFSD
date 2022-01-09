@@ -1,12 +1,12 @@
 import { Controller,Post, Body, UseGuards} from "@nestjs/common";
-import { externalService } from "./external.service";
+import { ExternalService } from "./external.service";
 import { AuthGuard } from '@nestjs/passport';
 import { externalDto } from "./external.dto";
 
 @Controller("external")
 export class ExternalController {
   constructor(
-      private externalService: externalService,
+      private externalService: ExternalService,
      
     ) {}
  
@@ -14,7 +14,7 @@ export class ExternalController {
   @Post("/transferTransaction")
     CreateExternalTransfer(@Body()dto:externalDto):any {
      try{
-          return this.externalService.createExternalTransfer(dto);
+          return this.externalService.recieveExternalTransfer(dto);
         } catch{
             (err) => console.log(err.message);
         }

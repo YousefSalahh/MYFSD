@@ -31,8 +31,8 @@ export class AccountService {
 
   }
 
-  async FindAccount(accountID : number) {
-    return await this.accountModel.findOne( accountID ).exec();
+  async FindAccount(accountID : number ) :Promise<any>{
+    return await this.accountModel.findOne( {accountID : accountID} ).exec();
   }
 
   async getBalance(accountID : number) {

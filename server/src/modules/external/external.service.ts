@@ -67,7 +67,7 @@ await ngrok.disconnect(link); // stops
 
 //receiving external transfer
 async recieveExternalTransfer(dto : externalDto){
-    return await this.accountService.FindAccount(dto.receiverAccNumber)  //if this acc is valid
+    return await this.accountService.FindAccount((dto).receiverAccNumber)  //if this acc is valid
     .then(
         async (account) => {
             if(account) {
@@ -81,7 +81,7 @@ async recieveExternalTransfer(dto : externalDto){
                 transactionName : "External transfer" ,
                 description : dto.description
                 }
-                
+
                 return  await this.transactionService.createTransaction(initiateTransaction);
             }
             else {

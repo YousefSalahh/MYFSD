@@ -11,13 +11,15 @@ import { AccountService } from "../account/account.service";
 import { InternalDto } from "./dto/internal.dto";
 import { TransactionDto } from "./dto/transaction.dto";
 import { AccountDto } from "../account/dto/account.Dto";
+import { forwardRef, Inject } from "@nestjs/common";
+
 
 @Injectable()
 export class TransactionService {
   constructor(
     @InjectModel(Transactions.name)
-    private transactionModel: Model<TransactionsDocument>,
-    private accountModel: Model<AccountsDocument>,
+    private transactionModel: Model<Transactions>,
+    @Inject(forwardRef(() => AccountService))
     private AccountService: AccountService
   ) {}
 

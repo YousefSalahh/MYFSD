@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 // import { UserSchema } from "src/schemas/user.schema";
@@ -11,12 +11,14 @@ import { TransactionService } from "../transaction/transaction.service";
 import { Transactions } from "src/schemas/transaction.schema";
 import { TransactionDto } from "../transaction/dto/transaction.dto";
 
+import { forwardRef } from "@nestjs/common";
 
 @Injectable()
 export class AccountService {
   constructor(
     @InjectModel(Account.name) 
-    private accountModel: Model<AccountsDocument>,
+    private accountModel: Model<Account>,
+    @Inject(forwardRef(() => TransactionService))
     private TransactionService: TransactionService
   ) {}
 

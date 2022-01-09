@@ -7,12 +7,17 @@ import { registerDto } from "./dto/user.dto";
 import { AccountService } from "../account/account.service";
 import { TransactionService } from "../transaction/transaction.service";
 
+import { forwardRef, Inject } from "@nestjs/common";
+
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) 
+  constructor(
+    @InjectModel(User.name) 
     private userModel: Model<UserDocument>,
+    @Inject(forwardRef(() => AccountService))
     private AccountService: AccountService,
+    @Inject(forwardRef(() => TransactionService))
     private TransactionService: TransactionService
   ){}
 

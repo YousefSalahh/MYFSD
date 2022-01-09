@@ -1,7 +1,7 @@
 import { Controller,Post, Body, UseGuards} from "@nestjs/common";
 import { ExternalService } from "./external.service";
 import { AuthGuard } from '@nestjs/passport';
-import { externalDto } from "./external.dto";
+import { externalDto } from "./dto/external.dto";
 
 @Controller("external")
 export class ExternalController {

@@ -3,7 +3,7 @@ import { TransactionService } from "../transaction/transaction.service";
 import { TransactionDto } from '../transaction/dto/transaction.dto';
 //import { JwtService } from "@nestjs/jwt";
 import axios from 'axios';
-import { externalDto } from "./external.dto";
+import { externalDto } from "./dto/external.dto";
 import { AccountService } from "../account/account.service";
 import { JwtStrategy } from "./strategy/Jwtstrategy";
 

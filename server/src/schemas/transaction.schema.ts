@@ -18,11 +18,12 @@ export class Transactions {
   @Prop({ type: Date, required: true })
   dateOfToday: Date;
 
+  
   @Prop({ required: true })
-  debitAmount: number;
+  amount: number;
 
-  @Prop({ required: true })
-  creditAmount: number;
+  @Prop({ required: false })  //type transaction
+  type: string; 
 
   @Prop({ required: false })  //accountID loggedIn
   from: number;   
@@ -32,6 +33,10 @@ export class Transactions {
 
   @Prop({ required: false })  //for esxternal transfers
   bankName: string;
+
+  // @Prop({ required: true })
+  // debitAmount: number;
+
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(Transactions);

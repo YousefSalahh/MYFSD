@@ -1,16 +1,18 @@
 import {  HttpException, HttpStatus, Injectable, Options } from "@nestjs/common";
 import { TransactionService } from "../transaction/transaction.service";
 import { TransactionDto } from '../transaction/dto/transaction.dto';
-import { JwtService } from "@nestjs/jwt";
+//import { JwtService } from "@nestjs/jwt";
 import axios from 'axios';
 import { externalDto } from "./external.dto";
+import { AccountService } from "../account/account.service";
+import { JwtStrategy } from "./strategy/Jwtstrategy";
 
 @Injectable()
 export class  externalService {
-    AccountService: any;
     constructor(
         private transactionService: TransactionService,
-        private jwtService: JwtService ) {}
+        private JwtStrategy:JwtStrategy,
+        private accountService: AccountService) {}
 
 /* Ngrok
 *  allows you to expose a web server running on your local machine to the internet.
@@ -18,8 +20,8 @@ export class  externalService {
 *  if not , default port is "80" -> http
 */
 
-
-async createExternalTransaction(authtoken:string , port:number, receiverAccountNumber:string , amount:number , description:string ,accountID:number ) {
+//sending extrnal transaction
+async createExternalTransaction(authtoken:string , port:number, receiverAccNumber:string , amount:number , description:string ,accountID:number ) {
     const ngrok = require('ngrok');
     const link =  ngrok.connect({
       proto: 'http', 
@@ -28,53 +30,65 @@ async createExternalTransaction(authtoken:string , port:number, receiverAccountN
         
     })
 
-    const payload = {receiverAccountNumber, amount , description} //save external data in payload
+    const payload = {receiverAccNumber, amount , description} //save data in payload
+   // const token = JwtStrategy.sign(payload , {secret : "sKey"});
 
     axios.post(`${link}/external/transferTransaction` , payload)
     .then(
         async (response:any) => {
-            const balance = this.AccountService.getBalance(accountID);
-            if(balance > amount) {
+    //checking that the balance sent isn't more than 50 and adding 5$ fee
+            const balance = await this.accountService.getBalance(accountID);
+            if(balance > amount+5 && amount <= 50) {
                 //insert transaction
                 let todayDATE = new Date(); //get date
+
                 const insertTransaction : TransactionDto = {
                     dateOfToday : todayDATE ,
                     amount : amount,
                     accountID : accountID,
-                    creditAmount : 0,
-                    debitAmount : 1,
+                    type : "debit",
                     transactionName : "External" ,
                     description : description
                 }
+
             //inserting a recieved external transaction
             const postTransction = await this.transactionService.createTransaction(insertTransaction)
+
+
+            //handling 5 dollar fee by posting another transaction
+            const insert5dollars:TransactionDto = {
+            transactionName : "5-Dollar-Fee" ,accountID: accountID,amount: 5,type : "debit" , dateOfToday:todayDATE ,description:description}
+            const post5Dollars = await this.transactionService.createTransaction(insert5dollars);
             }
         } 
     )
 await ngrok.disconnect(link); // stops 
 }
 
-async createExternalTransfer(dto : externalDto){
-    return this.AccountService.findOneByAccountID((dto)).receiverAccNumber  //if this acc is valid
+//receiving external transfer
+async recieveExternalTransfer(dto : externalDto){
+    return await this.accountService.FindAccount(dto.receiverAccNumber)  //if this acc is valid
     .then(
         async (account) => {
             if(account) {
+            
                 let todayDATE = new Date();  //set todays date
                 const initiateTransaction : TransactionDto = {    //save transaction in our transaction table
-                    dateOfToday : todayDATE,
-                    accountID : dto.receiverAccNumber ,
-                    debitAmount : 0,
-                    creditAmount : 1,
-                    amount : dto.amount.valueOf(),  //amount sent from the user
-                    transactionName : "External transfer" ,
-                    description : dto.description
+                dateOfToday : todayDATE,
+                accountID : dto.receiverAccNumber ,
+                type : "credit",
+                amount : dto.amount.valueOf(),  //amount sent from the user
+                transactionName : "External transfer" ,
+                description : dto.description
                 }
-             return  await this.transactionService.createTransaction(initiateTransaction);
+                
+                return  await this.transactionService.createTransaction(initiateTransaction);
             }
             else {
                 throw new HttpException('account does not exist', HttpStatus.BAD_REQUEST);
             }
         }
+        
     )
 }
 

@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from "@nestjs/common";
+import { HttpException,HttpStatus ,BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 import { AccountDto } from "./dto/account.Dto";
@@ -29,6 +29,10 @@ export class AccountService {
       return {} as AccountsDocument
     }
 
+  }
+
+  async FindAccount(accountID : number) {
+    return await this.accountModel.findOne( accountID ).exec();
   }
 
   async getBalance(accountID : number) {
@@ -70,25 +74,25 @@ postAccountbyID(dto: AccountDto) {
 
 async updateRecieverBalance(accountID: number , amount:number): Promise<any> {
    const receiverAccount = await this.findOneByAccountID({ accountID });
-   if (!receiverAccount) return { error: "Please check the receiver account is correct" };
-
-  const receiverBalance = receiverAccount.balance += amount;
+   if (!receiverAccount)  
+      throw new HttpException('Please check the sender account is correc', HttpStatus.BAD_REQUEST);
+   const receiverBalance = receiverAccount.balance += amount;
    return receiverBalance;
    // await receiverAccount.save();
 }
 
 async updateSenderBalance(accountID: number , amount:number): Promise<any> {
   const senderAccount = await this.findOneByAccountID({ accountID });
-  if (!senderAccount)  return { error: "Please check the sender account is correct" };
-
+  if (!senderAccount)  
+    throw new HttpException('Please check the sender account is correc', HttpStatus.BAD_REQUEST);
   if (senderAccount.balance < amount) {
-    return  { error: "insuffecient funds" };
+    throw new HttpException('Please check your balance', HttpStatus.BAD_REQUEST);
   }
-  
+  else {
   var senderBalance = senderAccount.balance -= amount;
   return senderBalance 
   // await senderAccount.save();
-
+  }
 }
 
 

@@ -41,16 +41,16 @@ export class TransactionService {
 
 
   createFirstTransaction(): {
-    debitAmount: number;
+    amount: number;
     transactionName: string;
-    creditAmount: number;
+    type:string;
     dateOfToday: Date;
   } {
 
     const dto = {
-      debitAmount: 100,
+      amount: 100,
       transactionName: "first $100",
-      creditAmount: 0,
+      type: "debit",
       dateOfToday: new Date(),
     };
     
@@ -66,8 +66,9 @@ export class TransactionService {
         accountID: toAccount,
         transactionName: description,
         dateOfToday: new Date(),
-        debitAmount: amount,
-        creditAmount: 0
+        type:"debit",
+         amount: amount,
+        // creditAmount: 0
       });
     
       const updatedSenderAccount = await this.AccountService.updateSenderBalance(fromAccount, amount);
@@ -76,8 +77,9 @@ export class TransactionService {
         accountID: fromAccount,
         transactionName: description,
         dateOfToday: new Date(),
-        debitAmount: 0,
-        creditAmount: amount
+        type:"credit",
+        // debitAmount: 0,
+         amount: amount
       });
 
     

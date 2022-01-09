@@ -15,10 +15,10 @@ export class TransactionDto
   dateOfToday: Date;
 
   @IsNotEmpty()
-  debitAmount: number;
+  type: string;
 
-  @IsNotEmpty()
-  creditAmount: number;
+  // @IsNotEmpty()
+  // creditAmount: number;
 
   @IsNotEmpty()
   amount: number;

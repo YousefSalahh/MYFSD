@@ -11,7 +11,7 @@ export class ExternalController {
     ) {}
  
  // @UseGuards(AuthGuard('jwt'))
-  @Post("/transferTransaction")
+  @Post("/SendingExternalTransaction")
     CreateExternalTransfer(@Body()authtoken:string , port:number, receiverAccNumber:string , amount:number , description:string ,accountID:number ):any {
      try{
           return this.externalService.createExternalTransaction(authtoken , port ,receiverAccNumber , amount , description,accountID);
@@ -20,7 +20,7 @@ export class ExternalController {
         }
     }
 
-    @Post("/transferTransaction")
+    @Post("/RecievingExternalTransaction")
     recieveExternalTransfer(@Body()dto:externalDto):any {
      try{
           return this.externalService.recieveExternalTransfer(dto);

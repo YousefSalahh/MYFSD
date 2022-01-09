@@ -10,14 +10,24 @@ export class ExternalController {
      
     ) {}
  
-  @UseGuards(AuthGuard('jwt'))
+ // @UseGuards(AuthGuard('jwt'))
   @Post("/transferTransaction")
-    CreateExternalTransfer(@Body()dto:externalDto):any {
+    CreateExternalTransfer(@Body()authtoken:string , port:number, receiverAccNumber:string , amount:number , description:string ,accountID:number ):any {
+     try{
+          return this.externalService.createExternalTransaction(authtoken , port ,receiverAccNumber , amount , description,accountID);
+        } catch{
+            (err) => console.log(err.message);
+        }
+    }
+
+    @Post("/transferTransaction")
+    recieveExternalTransfer(@Body()dto:externalDto):any {
      try{
           return this.externalService.recieveExternalTransfer(dto);
         } catch{
             (err) => console.log(err.message);
         }
     }
+
 
 }

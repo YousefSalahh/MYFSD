@@ -29,11 +29,10 @@ async createExternalTransaction(authtoken:string , port:number, receiverAccNumbe
       authtoken: authtoken 
         
     })
-
     const payload = {receiverAccNumber, amount , description} //save data in payload
    // const token = JwtStrategy.sign(payload , {secret : "sKey"});
-
     axios.post(`${link}/external/transferTransaction` , payload)
+    
     .then(
         async (response:any) => {
     //checking that the balance sent isn't more than 50 and adding 5$ fee
@@ -50,11 +49,8 @@ async createExternalTransaction(authtoken:string , port:number, receiverAccNumbe
                     transactionName : "External" ,
                     description : description
                 }
-
             //inserting a recieved external transaction
             const postTransction = await this.transactionService.createTransaction(insertTransaction)
-
-
             //handling 5 dollar fee by posting another transaction
             const insert5dollars:TransactionDto = {
             transactionName : "5-Dollar-Fee" ,accountID: accountID,amount: 5,type : "debit" , dateOfToday:todayDATE ,description:description}

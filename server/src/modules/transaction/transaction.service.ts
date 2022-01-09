@@ -69,34 +69,37 @@ export class TransactionService {
   //updateSender account balance , decrease his balance && increase his credit
   async createInternaltransfer({ fromAccount, toAccount, description, amount }: InternalDto) :Promise<any> {   //we need to save sender accID
     
+
+      const updatedReceiverAccount = await this.AccountService.updateRecieverBalance(toAccount, amount);
+      if (updatedReceiverAccount.error) return updatedReceiverAccount 
+      const toTransaction = new this.transactionModel({
+        accountID: toAccount,
+        transactionName: description,
+        dateOfToday: new Date(),
+        debitAmount: amount,
+        creditAmount: 0
+      });
     
+      const updatedSenderAccount = await this.AccountService.updateSenderBalance(fromAccount, amount);
+      if (updatedSenderAccount.error) return updatedSenderAccount 
+      const fromTransaction = new this.transactionModel({
+        accountID: fromAccount,
+        transactionName: description,
+        dateOfToday: new Date(),
+        debitAmount: 0,
+        creditAmount: amount
+      });
 
-
-
-    const updatedReceiverAccount = await this.AccountService.updateRecieverBalance(toAccount, amount);
-    if (updatedReceiverAccount.error) return updatedReceiverAccount 
-    const toTransaction = new this.transactionModel({
-      accountID: toAccount,
-      transactionName: description,
-      dateOfToday: new Date(),
-      debitAmount: amount,
-      creditAmount: 0
-    });
-
-    toTransaction.save();
-
-
-    const updatedSenderAccount = await this.AccountService.updateSenderBalance(fromAccount, amount);
-    if (updatedSenderAccount.error) return updatedSenderAccount 
-    const fromTransaction = new this.transactionModel({
-      accountID: fromAccount,
-      transactionName: description,
-      dateOfToday: new Date(),
-      debitAmount: 0,
-      creditAmount: amount
-    });
+    
+    
+    // Update balance after transaction
 
     fromTransaction.save();
+    updatedSenderAccount.save();
+    
+    toTransaction.save();
+    updatedSenderAccount.save();
+
 
     }
   }

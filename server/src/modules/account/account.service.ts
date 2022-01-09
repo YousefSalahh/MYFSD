@@ -86,8 +86,9 @@ async updateRecieverBalance(accountID: number , amount:number): Promise<any> {
    const receiverAccount = await this.findOneByAccountID({ accountID });
    if (!receiverAccount) return { error: "Please check the receiver account is correct" };
 
-   receiverAccount.balance += amount;
-   return await receiverAccount.save();
+  const receiverBalance = receiverAccount.balance += amount;
+   return receiverBalance;
+   // await receiverAccount.save();
 }
 
 async updateSenderBalance(accountID: number , amount:number): Promise<any> {
@@ -97,9 +98,10 @@ async updateSenderBalance(accountID: number , amount:number): Promise<any> {
   if (senderAccount.balance < amount) {
     return  { error: "insuffecient funds" };
   }
-
-  senderAccount.balance -= amount;
-  return await senderAccount.save();
+  
+  var senderBalance = senderAccount.balance -= amount;
+  return senderBalance 
+  // await senderAccount.save();
 
 }
 

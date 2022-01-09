@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "reactstrap";
 import { useState, useEffect } from "react";
-import apiService from "../../services/apiService"
+import apiService from "../../../services/apiService"
 import router from 'next/router'
 import { Navbar, NavbarText, Button, Nav, NavItem, NavLink } from "reactstrap";
 
@@ -13,7 +13,11 @@ export async function getServerSideProps(context) {
   }
 }
 
+<<<<<<< HEAD:client/pages/transaction/[accountID].js
 export default function transactions({params}) {
+=======
+export default function transactions({ params }) {
+>>>>>>> 633970195ad306cf6f423775bd0ebf4f70a2f233:client/pages/transaction/[accountID]/index.js
 
   const { accountID } = params
 
@@ -50,8 +54,12 @@ export default function transactions({params}) {
             <NavLink href="/" className="mx-3">
               Dashboard
             </NavLink>
+<<<<<<< HEAD:client/pages/transaction/[accountID].js
             
             <NavLink href="/transaction/createTransaction" className="mx-3">
+=======
+            <NavLink href={`/transaction/${accountID}/createTransaction`} className="mx-3">
+>>>>>>> 633970195ad306cf6f423775bd0ebf4f70a2f233:client/pages/transaction/[accountID]/index.js
               Create Transaction
             </NavLink>
           </NavItem>  

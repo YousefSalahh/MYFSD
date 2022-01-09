@@ -10,6 +10,10 @@ import { AccountService } from "../account/account.service";
 import { Account, AccountSchema } from "src/schemas/account.schema";
 import { Transactions, TransactionSchema } from "src/schemas/transaction.schema";
 import { TransactionService } from "../transaction/transaction.service";
+import { AccountModule } from "../account/account.module";
+import { UsersModule } from "../user/user.module";
+import { TransactionModule } from "../transaction/transaction.module";
+import { forwardRef } from "@nestjs/common";
 
 @Module({
   imports: [
@@ -20,10 +24,12 @@ import { TransactionService } from "../transaction/transaction.service";
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Account.name, schema: AccountSchema }]),
     MongooseModule.forFeature([{ name: Transactions.name, schema: TransactionSchema }]),
-    
+    AccountModule,
+    UsersModule,
+    TransactionModule
   ],
-  controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, UserService, AccountService, TransactionService ],
+  controllers: [ AuthController ],
+  providers: [ AuthService, JwtStrategy, UserService, TransactionService, AccountService ],
   exports: [ AuthService ],
 })
 export class AuthModule {}

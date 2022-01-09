@@ -2,18 +2,20 @@ import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { UsersModule } from "./modules/user/user.module";
 import { AuthModule } from "./modules/auth/auth.module";
-import { AccountModule } from "./modules/account/account.modules";
+import { AccountModule } from "./modules/account/account.module";
 import { TransactionModule } from "./modules/transaction/transaction.module";
 import { ConfigModule } from "@nestjs/config";
 
+require('dotenv').config()
+
 @Module({
   imports: [
-    AuthModule,
-    AccountModule,
-    ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URL),
-    TransactionModule,
+    ConfigModule.forRoot(),
     UsersModule,
+    TransactionModule,
+    AccountModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

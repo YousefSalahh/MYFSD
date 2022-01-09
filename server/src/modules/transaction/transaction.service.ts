@@ -8,15 +8,29 @@ import {
 } from "src/schemas/transaction.schema";
 import { Account } from "src/schemas/account.schema";
 import { AccountService } from "../account/account.service";
+<<<<<<< HEAD
 import { InternalDto } from "./dto/internalDto";
 import { TransactionDto } from "./dto/transaction.dto";
 import { AccountDto } from "../account/dto/account.Dto";
+=======
+import { InternalDto } from "./dto/internal.dto";
+import { TransactionDto } from "./dto/transaction.dto";
+import { AccountDto } from "../account/dto/account.Dto";
+import { forwardRef, Inject } from "@nestjs/common";
+
+
+>>>>>>> 633970195ad306cf6f423775bd0ebf4f70a2f233
 @Injectable()
 export class TransactionService {
   constructor(
     @InjectModel(Transactions.name)
+<<<<<<< HEAD
     private transactionModel: Model<TransactionsDocument>,
     private accountModel: Model<AccountsDocument>,
+=======
+    private transactionModel: Model<Transactions>,
+    @Inject(forwardRef(() => AccountService))
+>>>>>>> 633970195ad306cf6f423775bd0ebf4f70a2f233
     private AccountService: AccountService
   ) {}
 
@@ -64,6 +78,7 @@ export class TransactionService {
   //if == true ---> call 2 functions {updateRecieverAcc balance , updateSender account balance}
   //updateRecieverAcc balance , increase his balance && increase his debit
   //updateSender account balance , decrease his balance && increase his credit
+<<<<<<< HEAD
   async createInternaltransfer(internaldto : InternalDto) :Promise<any> {   //we need to save sender accID
     const IsValidRecieverAccount = await this.AccountService.findOneByAccountID({ accountID: internaldto.recieverAccID });
     const senderAccID = 632 ;
@@ -97,6 +112,45 @@ export class TransactionService {
 
 
 
+=======
+  async createInternaltransfer({ fromAccount, toAccount, description, amount }: InternalDto) :Promise<any> {   //we need to save sender accID
+    
+
+      const updatedReceiverAccount = await this.AccountService.updateRecieverBalance(toAccount, amount);
+      if (updatedReceiverAccount.error) return updatedReceiverAccount 
+      const toTransaction = new this.transactionModel({
+        accountID: toAccount,
+        transactionName: description,
+        dateOfToday: new Date(),
+        debitAmount: amount,
+        creditAmount: 0
+      });
+    
+      const updatedSenderAccount = await this.AccountService.updateSenderBalance(fromAccount, amount);
+      if (updatedSenderAccount.error) return updatedSenderAccount 
+      const fromTransaction = new this.transactionModel({
+        accountID: fromAccount,
+        transactionName: description,
+        dateOfToday: new Date(),
+        debitAmount: 0,
+        creditAmount: amount
+      });
+
+    
+    
+    // Update balance after transaction
+
+    fromTransaction.save();
+    updatedSenderAccount.save();
+    
+    toTransaction.save();
+    updatedSenderAccount.save();
+
+
+    }
+  }
+    
+>>>>>>> 633970195ad306cf6f423775bd0ebf4f70a2f233
 
 
 

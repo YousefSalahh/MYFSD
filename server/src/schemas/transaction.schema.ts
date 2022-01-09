@@ -1,3 +1,4 @@
+
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Date, Document } from "mongoose";
 
@@ -23,6 +24,7 @@ export class Transactions {
   @Prop({ required: true })
   creditAmount: number;
 
+<<<<<<< HEAD
   @Prop({ required: false })  //accountID loggedIn
   from: number;   
 
@@ -31,6 +33,13 @@ export class Transactions {
 
   @Prop({ required: false })  //for esxternal transfers
   bankName: string;
+=======
+  @Prop({ required: false })
+  from: number;
+
+  @Prop({ required: false })
+  to: number;
+>>>>>>> 633970195ad306cf6f423775bd0ebf4f70a2f233
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(Transactions);

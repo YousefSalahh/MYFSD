@@ -6,11 +6,14 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { UserDocument, User } from "src/schemas/user.schema";
 import { JwtStrategy } from "./strategies/jwt.strategy";
+import { forwardRef, Inject } from "@nestjs/common";
+
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
+    @Inject(forwardRef(() => UserService))
     private UserService: UserService,
     @InjectModel(User.name) private userModel: Model<UserDocument>
   ) {}

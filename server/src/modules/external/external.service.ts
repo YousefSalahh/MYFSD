@@ -21,18 +21,18 @@ export class  ExternalService {
 */
 
 //sending extrnal transaction
-async createExternalTransaction(authtoken:string , port:number, receiverAccNumber:string , amount:number , description:string ,accountID:number ) {
+async createExternalTransaction(receiverAccNumber:string , amount:number , description:string ,accountID:number ) {
     const ngrok = require('ngrok');
     const link =  ngrok.connect({
       proto: 'http', 
-      address: port, 
-      authtoken: authtoken 
+    //  address: port, 
+      //authtoken: authtoken 
         
     })
     const payload = {receiverAccNumber, amount , description} //save data in payload
    // const token = JwtStrategy.sign(payload , {secret : "sKey"});
     axios.post(`${link}/external/transferTransaction` , payload)
-    
+
     .then(
         async (response:any) => {
     //checking that the balance sent isn't more than 50 and adding 5$ fee

@@ -3,10 +3,13 @@ import {  IsNotEmpty } from "class-validator";
 export class TransactionDto
 {
   @IsNotEmpty()
-  transactionName:string;
+  transactionName:string;   
 
   @IsNotEmpty()
-  accountID: number;
+  description :string;   
+  
+  @IsNotEmpty()
+  accountID: number;  
 
   @IsNotEmpty()
   dateOfToday: Date;
@@ -16,4 +19,9 @@ export class TransactionDto
 
   @IsNotEmpty()
   creditAmount: number;
+
+  @IsNotEmpty()
+  amount: number;
+ 
+  
 }

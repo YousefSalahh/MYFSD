@@ -8,11 +8,11 @@ export class Transactions {
   @Prop({ required: true })
   transactionName: string;
 
+  @Prop({ required: false })
+  description: string;
+
   @Prop({ type: Number, required: true })
   accountID: number;
-
-  // @Prop({ ref: "users", type: Types.ObjectId, required: true })
-  // accountID: Types.ObjectId;
 
   @Prop({ type: Date, required: true })
   dateOfToday: Date;
@@ -23,11 +23,14 @@ export class Transactions {
   @Prop({ required: true })
   creditAmount: number;
 
-  @Prop({ required: false })
-  from: string;
+  @Prop({ required: false })  //accountID loggedIn
+  from: number;   
 
-  @Prop({ required: false })
-  to: string;
+  @Prop({ required: false })  //account ID of reciever
+  to: number;
+
+  @Prop({ required: false })  //for esxternal transfers
+  bankName: string;
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(Transactions);

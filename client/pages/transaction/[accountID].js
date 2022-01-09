@@ -1,6 +1,5 @@
 import React from "react";
 import { Table } from "reactstrap";
-// import { useFetchTransaction } from "../adapters/transaction"
 import { useState, useEffect } from "react";
 import apiService from "../../services/apiService"
 import router from 'next/router'
@@ -14,17 +13,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function transactions({ params }) {
-
-  // const accID = 1 ;
-  // const transID = "T001" ;
-  // const date = "11/10/2021" ;
-  // const debit = 100 ;
-  // const credit = 0;
-  // const balance = 100;
-
-  // const router = useRouter()
-  // console.log(router)
+export default function transactions({params}) {
 
   const { accountID } = params
 
@@ -61,7 +50,11 @@ export default function transactions({ params }) {
             <NavLink href="/" className="mx-3">
               Dashboard
             </NavLink>
-          </NavItem>
+            
+            <NavLink href="/transaction/createTransaction" className="mx-3">
+              Create Transaction
+            </NavLink>
+          </NavItem>  
         </Nav>
         <NavbarText>
           <Button color="danger" onClick={signout}>
@@ -98,7 +91,6 @@ export default function transactions({ params }) {
                 <td>{data.dateOfToday}</td>
                 <td>{data.debitAmount}</td>
                 <td>{data.creditAmount}</td>
-                {/* <td>{data.balance}</td> */}
             </tr>
           )) }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "reactstrap";
 import { useState, useEffect } from "react";
-import apiService from "../../services/apiService"
+import apiService from "../../../services/apiService"
 import router from 'next/router'
 import { Navbar, NavbarText, Button, Nav, NavItem, NavLink } from "reactstrap";
 
@@ -50,7 +50,7 @@ export default function transactions({ params }) {
             <NavLink href="/" className="mx-3">
               Dashboard
             </NavLink>
-            <NavLink href="/transaction/createTransaction" className="mx-3">
+            <NavLink href={`/transaction/${accountID}/createTransaction`} className="mx-3">
               Create Transaction
             </NavLink>
           </NavItem>  

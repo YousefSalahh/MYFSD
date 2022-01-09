@@ -17,19 +17,26 @@ import { forwardRef } from "@nestjs/common";
 export class AccountService {
   constructor(
     @InjectModel(Account.name) 
-    private accountModel: Model<Account>,
+    private accountModel: Model<AccountsDocument>,
     @Inject(forwardRef(() => TransactionService))
     private TransactionService: TransactionService
   ) {}
 
 
   async findOneByAccountID({accountID}) : Promise<AccountsDocument> {
-    console.log(accountID);
-    return await this.accountModel.findOne({ accountID: accountID }).exec();
-}
+    try {
+
+      return await this.accountModel.findOne({ accountID }).exec();
+      
+    } catch (e) {
+      console.error(e)
+      return {} as AccountsDocument
+    }
+
+  }
 
   async getBalance(accountID : number) {
-        const acc = await this.findOneByAccountID({accountID}) ; 
+        const acc = await this.findOneByAccountID({ accountID }) ; 
         const currBalance = acc.balance ;
 
         return currBalance ;
@@ -77,7 +84,7 @@ postAccountbyID(dto: AccountDto) {
 
 async updateRecieverBalance(accountID: number , amount:number): Promise<any> {
    const receiverAccount = await this.findOneByAccountID({ accountID });
-   if (!receiverAccount) throw new BadRequestException("Please check the receiver account is correct")
+   if (!receiverAccount) return { error: "Please check the receiver account is correct" };
 
    receiverAccount.balance += amount;
    return await receiverAccount.save();
@@ -85,10 +92,10 @@ async updateRecieverBalance(accountID: number , amount:number): Promise<any> {
 
 async updateSenderBalance(accountID: number , amount:number): Promise<any> {
   const senderAccount = await this.findOneByAccountID({ accountID });
-  if (!senderAccount) throw new BadRequestException("Please check the receiver account is correct")
+  if (!senderAccount)  return { error: "Please check the sender account is correct" };
 
   if (senderAccount.balance < amount) {
-    throw new BadRequestException("Insuffecient Funds")
+    return  { error: "insuffecient funds" };
   }
 
   senderAccount.balance -= amount;

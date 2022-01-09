@@ -3,9 +3,15 @@ import {  IsNotEmpty } from "class-validator";
 export class InternalDto
 {
   @IsNotEmpty()
-  accountID: number;
+  fromAccount: number;
+
+  @IsNotEmpty()
+  toAccount: number;
 
   @IsNotEmpty() 
-  balance: number;
-  
+  amount: number;
+
+  @IsNotEmpty()
+  description: string;
+
 }

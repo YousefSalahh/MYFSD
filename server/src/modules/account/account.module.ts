@@ -7,7 +7,6 @@ import { TransactionService } from "../transaction/transaction.service";
 import { Transactions, TransactionSchema } from "src/schemas/transaction.schema";
 import { TransactionModule } from "../transaction/transaction.module";
 
-
 @Module({
   imports:[
     MongooseModule.forFeature([{ name: Account.name, schema: AccountSchema }]),

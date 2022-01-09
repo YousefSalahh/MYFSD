@@ -17,9 +17,6 @@ export class TransactionDto
   @IsNotEmpty()
   type: string;
 
-  // @IsNotEmpty()
-  // creditAmount: number;
-
   @IsNotEmpty()
   amount: number;
  

@@ -45,6 +45,7 @@ export class TransactionService {
     transactionName: string;
     type:string;
     dateOfToday: Date;
+    description: string;
   } {
 
     const dto = {
@@ -52,6 +53,7 @@ export class TransactionService {
       transactionName: "first $100",
       type: "debit",
       dateOfToday: new Date(),
+      description: "first $100",
     };
     
     return dto;

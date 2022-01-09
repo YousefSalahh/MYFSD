@@ -57,7 +57,7 @@ export class AccountService {
       SID
     });
     const firstTransaction = this.TransactionService.createFirstTransaction();
-  //  this.TransactionService.createTransaction({ ...firstTransaction, accountID: createAccount.accountID });
+    this.TransactionService.createTransaction({ ...firstTransaction, accountID: createAccount.accountID });
     return createAccount.save();
 
 }

@@ -62,7 +62,7 @@ export default function createTransactions({ params }) {
     <InputGroupText>
       $
     </InputGroupText>
-    <Input onChange={(e) => setTransactions({ ...transactions, amount: e.target.value })} name="creditAmount" placeholder="Amount being transferred" />
+    <Input onChange={(e) => setTransactions({ ...transactions, amount: e.target.value })} name="amount" placeholder="Amount being transferred" />
   </InputGroup>
   <br  />
   <Button color="primary" onClick={addTransactions}> Add Transaction </Button>

@@ -41,7 +41,7 @@ export class UserService {
       
       const createAccount = await this.AccountService.createAccount(dto.SID);
       const firstTransaction = this.TransactionService.createFirstTransaction();
-     // this.TransactionService.createTransaction({ ...firstTransaction, accountID: createAccount.accountID });
+      this.TransactionService.createTransaction({ ...firstTransaction, accountID: createAccount.accountID });
       
       return createUser.save();
       

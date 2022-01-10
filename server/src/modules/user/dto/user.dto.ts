@@ -18,9 +18,6 @@ export class registerDto {
     @IsNotEmpty()
     name: string;
   
-    //@IsNotEmpty()
-    //dateofBirth: string;
-  
     @IsNotEmpty()
     phone: string ; 
   

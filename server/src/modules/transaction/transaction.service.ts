@@ -83,15 +83,13 @@ export class TransactionService {
     
           this.AccountService.updateSenderBalance(dto.fromAccount,dto.amount);
           this.AccountService.updateRecieverBalance(dto.toAccount,dto.amount)
+        } 
+        else 
+          throw new HttpException('InSufficinet funds' ,400);
+    }
 
-      
-    } 
-    else 
-      throw new HttpException('InSufficinet funds' ,400);
-    }
-    else{
+    else
       throw new HttpException('account does not exist', 404);
-    }
   }
 }
 

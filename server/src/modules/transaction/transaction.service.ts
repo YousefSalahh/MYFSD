@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { AccountsDocument } from "src/schemas/account.schema";
@@ -53,34 +53,45 @@ export class TransactionService {
     return dto;
     }
 
-    async createInternaltransfer(dto: InternalDto) :Promise<any> {   //we need to save sender accID
-      const isValid = await this.AccountService.FindAccount(dto.toAccount);
-      if(isValid){
-      const createDtoFrom :TransactionDto = {
-        accountID : dto.toAccount,
-        transactionName: "Internal",
-        description : "Internal Transfer",
-        dateOfToday: new Date(),
-        type:"debit",
-         amount: dto.amount,
-      };
-      await this.createTransaction(createDtoFrom);
+    async createInternaltransfer(dto: InternalDto) {   //we need to save sender accID
+      const isRecieverValid = await this.AccountService.FindAccount(dto.toAccount);
+     //const isSenderValid = await this.AccountService.FindAccount(dto.fromAccount);
+      const balance = await this.AccountService.getBalance((dto).fromAccount);
+      if(isRecieverValid )
+      {
+        if (balance >= dto.amount) {
+          const createDtoFrom :TransactionDto = {
+            accountID : dto.toAccount,
+            transactionName: "Internal",
+            description : "Internal Transfer",
+            dateOfToday: new Date(),
+            type:"debit",
+            amount: dto.amount,
+          };
+          await this.createTransaction(createDtoFrom);
+    
+          const createDtoTo :TransactionDto = {
+            accountID : dto.fromAccount,
+            transactionName: "Internal",
+            description : "Internal Transfer",
+            dateOfToday: new Date(),
+            type:"credit",
+             amount: dto.amount,
+          };
+    
+          await this.createTransaction(createDtoTo);
+    
+          this.AccountService.updateSenderBalance(dto.fromAccount,dto.amount);
+          this.AccountService.updateRecieverBalance(dto.toAccount,dto.amount)
 
-      const createDtoTo :TransactionDto = {
-        accountID : dto.fromAccount,
-        transactionName: "Internal",
-        description : "Internal Transfer",
-        dateOfToday: new Date(),
-        type:"credit",
-         amount: dto.amount,
-      };
-
-      await this.createTransaction(createDtoTo);
-
-      this.AccountService.updateSenderBalance(dto.fromAccount,dto.amount);
-      this.AccountService.updateRecieverBalance(dto.toAccount,dto.amount)
-
-    }  
+      
+    } 
+    else 
+      throw new HttpException('InSufficinet funds' ,400);
+    }
+    else{
+      throw new HttpException('account does not exist', 404);
+    }
   }
 }
 

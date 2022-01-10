@@ -85,9 +85,7 @@ async updateSenderBalance(accountID: number , amount:number): Promise<any> {
   const senderAccount = await this.findOneByAccountID({ accountID });
   if (!senderAccount)  
     throw new HttpException('Please check the sender account is correc', HttpStatus.BAD_REQUEST);
-  if (senderAccount.balance < amount) {
-    throw new HttpException('Please check your balance', HttpStatus.BAD_REQUEST);
-  }
+ 
   else {
   var senderBalance = senderAccount.balance -= amount;
   return senderBalance 

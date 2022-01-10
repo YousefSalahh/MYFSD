@@ -30,13 +30,15 @@ async createExternalTransaction(request: any) {
             if(response){ 
             const insertTransaction : TransactionDto = {dateOfToday : new Date() ,amount : request.amount,accountID : request.receiverAccNumber,
             type : "debit",transactionName : "External" ,description : request.description}
-            
+
             //inserting a recieved external transaction
             await this.transactionService.createTransaction(insertTransaction)
             //handling 5 dollar fee by posting another transaction
+
             const insert5dollars:TransactionDto = {
             transactionName : "5-Dollar-Fee" , accountID : request.receiverAccNumber,amount: 5,type : "debit" , dateOfToday:new Date() ,description:request.description}
             await this.transactionService.createTransaction(insert5dollars);
+            
             //update the Sender balance
             this.accountService.updateSenderBalance(request.receiverAccNumber , request.amount);
             this.accountService.updateSenderBalance(request.receiverAccNumber, 5);

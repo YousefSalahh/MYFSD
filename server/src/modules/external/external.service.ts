@@ -8,12 +8,12 @@ import { JwtStrategy } from "./strategy/Jwtstrategy";
 
 @Injectable()
 export class  ExternalService {
-    constructor(
-        private transactionService: TransactionService,
-        private JwtStrategy:JwtStrategy,
-        private accountService: AccountService) {}
+constructor(
+    private transactionService: TransactionService,
+    private JwtStrategy:JwtStrategy,
+    private accountService: AccountService) {}
 
-        
+
 //sending extrnal transaction
 
 async createExternalTransaction(request: any) {

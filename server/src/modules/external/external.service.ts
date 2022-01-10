@@ -26,11 +26,13 @@ async createExternalTransaction(request: any,dto : externalDto ) {
               expiresIn: "5min",
             });
 
-   axios.post(`http://${request.url}/external/createtransfer`, request,{headers:{'Authorization':`${token}`,'Bypass-Tunnel-Reminder':"any"}})
-
+   axios.post(`http://${request.url}/external/SendingExternalTransaction`, request,{headers:{'Authorization':`${token}`,'Bypass-Tunnel-Reminder':"any"}})
     .then(
         async (response:any) => {
-    //checking that the balance sent isn't more than 50 and adding 5$ fee
+    /**checking that the balance sent isn't more than 50 
+     * adding 5$ fee
+     * check if the account balance more than the amount sent + transfer fees
+    */ 
             const balance = await this.accountService.getBalance((dto).amount);
             if(balance > dto.amount+5 && dto.amount <= 50) {
                 //insert transaction

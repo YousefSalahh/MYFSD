@@ -13,11 +13,7 @@ export class  ExternalService {
         private transactionService: TransactionService,
         private JwtService:JwtService,
         private accountService: AccountService) {}
-
-
-
-
-
+        
 //sending extrnal transaction
 async createExternalTransaction(request: any,dto : externalDto ) {
     const token = this.JwtService.sign(

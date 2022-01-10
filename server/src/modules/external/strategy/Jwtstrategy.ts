@@ -25,7 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
        receiverAccNumber: payload.receiverAccNumber, amount: payload.amount , description:payload.description
       };
   }
-  GenerateToken(dto:externalDto,res:any)
+  GenerateToken(dto:externalDto)
   {
     //create token
     const token = this.JwtService.sign(
@@ -38,10 +38,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
               expiresIn: "5min",
         });
     
-    let response: object = { ...{receiverAccNumber:dto.receiverAccNumber, amount:dto.amount ,description:dto.description }, token: token };
-    res.json(response);
+  
     
-    return res;
+    return token;
   }
 
 }

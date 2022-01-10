@@ -81,8 +81,8 @@ export class TransactionService {
     
           await this.createTransaction(createDtoTo);
     
-          this.AccountService.updateSenderBalance(dto.fromAccount,dto.amount);
-          this.AccountService.updateRecieverBalance(dto.toAccount,dto.amount)
+          this.AccountService.updateSenderBalance(dto.fromAccount ,dto.amount);
+          this.AccountService.updateRecieverBalance(dto.toAccount, dto.amount)
         } 
         else 
           throw new HttpException('InSufficinet funds' ,400);

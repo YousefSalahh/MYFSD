@@ -2,6 +2,7 @@ import { Controller,Post, Body, UseGuards} from "@nestjs/common";
 import { ExternalService } from "./external.service";
 import { AuthGuard } from '@nestjs/passport';
 import { externalDto } from "./dto/external.dto";
+import { ExternalDto } from "./dto/ExternalDto";
 
 @Controller("external")
 export class ExternalController {
@@ -12,7 +13,7 @@ export class ExternalController {
  
  // @UseGuards(AuthGuard('jwt'))
   @Post("/SendingExternalTransaction")
-    CreateExternalTransfer(@Body()request: any ):any {
+    CreateExternalTransfer(@Body()request: ExternalDto ):any {
      try{
           return this.externalService.createExternalTransaction(request );
         } catch{
@@ -20,7 +21,7 @@ export class ExternalController {
         }
     }
 
-    @Post("/RecievingExternalTransaction")
+    @Post("/transfer")
     recieveExternalTransfer(@Body()dto:externalDto):any {
      try{
           return this.externalService.recieveExternalTransfer(dto);

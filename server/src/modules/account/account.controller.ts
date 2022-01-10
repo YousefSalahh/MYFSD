@@ -20,4 +20,9 @@ export class AccountController {
     return this.accountService.postAccountbyID(dto)
   }
 
+  @Post('/addAccount/:SID')  
+  createAccount(@Param('SID') SID: number) : any {
+    return this.accountService.createAccount(SID)
+  }
+
 }

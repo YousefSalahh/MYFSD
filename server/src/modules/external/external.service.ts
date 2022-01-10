@@ -33,12 +33,13 @@ async createExternalTransaction(request: any) {
 
             //inserting a recieved external transaction
             await this.transactionService.createTransaction(insertTransaction)
-            //handling 5 dollar fee by posting another transaction
 
+            
+            //handling 5 dollar fee by posting another transaction
             const insert5dollars:TransactionDto = {
             transactionName : "5-Dollar-Fee" , accountID : request.receiverAccNumber,amount: 5,type : "debit" , dateOfToday:new Date() ,description:request.description}
             await this.transactionService.createTransaction(insert5dollars);
-            
+
             //update the Sender balance
             this.accountService.updateSenderBalance(request.receiverAccNumber , request.amount);
             this.accountService.updateSenderBalance(request.receiverAccNumber, 5);
@@ -57,14 +58,10 @@ async recieveExternalTransfer(dto : externalDto){
     return await this.accountService.FindAccount((dto).receiverAccNumber)  //if this acc is valid
     .then(
         async (account) => {
-            if(account) {       
-                const initiateTransaction : TransactionDto = {    //save transaction in our transaction table
-                dateOfToday : new Date(),
-                accountID : dto.receiverAccNumber ,
-                type : "credit",
-                amount : dto.amount.valueOf(),  //amount sent from the user
-                transactionName : "External transfer" ,
-                description : dto.description
+            if(account) {   
+                //save transaction
+                const initiateTransaction : TransactionDto = {dateOfToday : new Date(),accountID : dto.receiverAccNumber ,type : "credit",
+                amount : dto.amount.valueOf(),transactionName : "External transfer" ,description : dto.description
                 }
                 this.accountService.updateRecieverBalance((dto).receiverAccNumber , (dto).amount);
                 return  await this.transactionService.createTransaction(initiateTransaction);

@@ -8,6 +8,9 @@ export class InternalDto
   @IsNotEmpty()
   toAccount: number;
 
+  @IsNotEmpty()
+  transactionName: string;
+
   @IsNotEmpty() 
   amount: number;
 

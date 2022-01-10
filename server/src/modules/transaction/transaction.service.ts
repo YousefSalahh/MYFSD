@@ -13,7 +13,6 @@ import { TransactionDto } from "./dto/transaction.dto";
 import { AccountDto } from "../account/dto/account.Dto";
 import { forwardRef, Inject } from "@nestjs/common";
 
-
 @Injectable()
 export class TransactionService {
   constructor(
@@ -27,11 +26,6 @@ export class TransactionService {
     console.log(accountID, typeof accountID);
 
     return this.transactionModel.find({ accountID: accountID }).exec();
-  }
-
-  createExternalTransaction(dto: TransactionDto): Promise<Transactions> {
-    const transaction = new this.transactionModel(dto);
-    return transaction.save();
   }
 
   createTransaction(dto: TransactionDto): Promise<Transactions> {
@@ -59,45 +53,36 @@ export class TransactionService {
     return dto;
     }
 
-  async createInternaltransfer({ fromAccount, toAccount, description, amount }: InternalDto) :Promise<any> {   //we need to save sender accID
-    
-
-      const updatedReceiverAccount = await this.AccountService.updateRecieverBalance(toAccount, amount);
-      if (updatedReceiverAccount.error) return updatedReceiverAccount 
-      const toTransaction = new this.transactionModel({
-        accountID: toAccount,
-        transactionName: description,
+    async createInternaltransfer(dto: InternalDto) :Promise<any> {   //we need to save sender accID
+      const isValid = await this.AccountService.FindAccount(dto.toAccount);
+      if(isValid){
+      const createDtoFrom :TransactionDto = {
+        accountID : dto.toAccount,
+        transactionName: "Internal",
+        description : "Internal Transfer",
         dateOfToday: new Date(),
         type:"debit",
-         amount: amount,
-        // creditAmount: 0
-      });
-    
-      const updatedSenderAccount = await this.AccountService.updateSenderBalance(fromAccount, amount);
-      if (updatedSenderAccount.error) return updatedSenderAccount 
-      const fromTransaction = new this.transactionModel({
-        accountID: fromAccount,
-        transactionName: description,
+         amount: dto.amount,
+      };
+      await this.createTransaction(createDtoFrom);
+
+      const createDtoTo :TransactionDto = {
+        accountID : dto.fromAccount,
+        transactionName: "Internal",
+        description : "Internal Transfer",
         dateOfToday: new Date(),
         type:"credit",
-        // debitAmount: 0,
-         amount: amount
-      });
+         amount: dto.amount,
+      };
 
-    
-    
-    // Update balance after transaction
+      await this.createTransaction(createDtoTo);
 
-    fromTransaction.save();
-    updatedSenderAccount.save();
-    
-    toTransaction.save();
-    updatedSenderAccount.save();
+      this.AccountService.updateSenderBalance(dto.fromAccount,dto.amount);
+      this.AccountService.updateRecieverBalance(dto.toAccount,dto.amount)
 
-
-    }
+    }  
   }
-    
+}
 
 
 

@@ -46,13 +46,17 @@ async createExternalTransaction(request: any,dto : externalDto ) {
                 }
             //inserting a recieved external transaction
             const postTransction = await this.transactionService.createTransaction(insertTransaction)
+
             //handling 5 dollar fee by posting another transaction
             const insert5dollars:TransactionDto = {
             transactionName : "5-Dollar-Fee" , accountID : dto.receiverAccNumber,amount: 5,type : "debit" , dateOfToday:new Date() ,description:dto.description}
             const post5Dollars = await this.transactionService.createTransaction(insert5dollars);
-
+            //update the Sender balance
             this.accountService.updateSenderBalance(dto.receiverAccNumber , dto.amount);
             this.accountService.updateSenderBalance(dto.receiverAccNumber, 5);
+            }
+            else {
+                throw new HttpException('InSuffiecient Funds', HttpStatus.BAD_REQUEST);
             }
         } 
     )

@@ -18,11 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       secretOrKey:"My_Secret_Key",
     });
   }
-  /**
-   * Determines if the user JWT token is valid.
-   * On successfull validation, returns jwt payload 
-   * @param payload
-   */
+  
   async validate(payload: any) {
 
     return {
@@ -31,21 +27,21 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
   GenerateToken(dto:externalDto,res:any)
   {
-    
-        //create token
-        const token = this.JwtService.sign(
+    //create token
+    const token = this.JwtService.sign(
+        {
+            receiverAccNumber:dto.receiverAccNumber,  //store in the token the details of the transaction
+             amount:dto.amount ,   
+             description:dto.description }, 
             {
-                receiverAccNumber:dto.receiverAccNumber,  //store in the token the details of the transaction
-                 amount:dto.amount ,   
-                 description:dto.description }, 
-                {
-                  secret:"My-Secret-Key", //send secret and expiray date also in the token
-                  expiresIn: "5min",
-            });
-        
-        let response: object = { ...{receiverAccNumber:dto.receiverAccNumber, amount:dto.amount ,description:dto.description }, token: token };
-        res.json(response);
-         return res;
+              secret:"My-Secret-Key", //send secret and expiray date also in the token
+              expiresIn: "5min",
+        });
+    
+    let response: object = { ...{receiverAccNumber:dto.receiverAccNumber, amount:dto.amount ,description:dto.description }, token: token };
+    res.json(response);
+    
+    return res;
   }
 
 }

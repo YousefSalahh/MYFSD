@@ -6,70 +6,60 @@ import { externalDto } from "./dto/external.dto";
 import { AccountService } from "../account/account.service";
 import { JwtStrategy } from "./strategy/Jwtstrategy";
 import { JwtService } from "@nestjs/jwt";
+import { Response as res, Request as req} from "express";
 
 @Injectable()
 export class  ExternalService {
     constructor(
         private transactionService: TransactionService,
-        private JwtService:JwtService,
+        private JwtStrategy:JwtStrategy,
         private accountService: AccountService) {}
 
-//sending extrnal transaction
-async createExternalTransaction(request: any,dto : externalDto ) {
-    const token = this.JwtService.sign(
-        {
-            receiverAccNumber:dto.receiverAccNumber,  //store in the token the details of the transaction
-             amount:dto.amount ,   
-             description:dto.description }, 
-            {
-              secret:"My-Secret-Key", //send secret and expiray date also in the token
-              expiresIn: "5min",
-            });
-            
-   axios.post(`http://${request.url}/external/SendingExternalTransaction`, request,{headers:{'Authorization':`${token}`,'Bypass-Tunnel-Reminder':"any"}})
-    .then(
-        async (response:any) => {
-    /**checking that the balance sent isn't more than 50 
-     * adding 5$ fee
-     * check if the account balance more than the amount sent + transfer fees
-    */ 
-            const balance = await this.accountService.getBalance((dto).amount);
-            if(balance > dto.amount+5 && dto.amount <= 50) {
-                //insert transaction
-                const insertTransaction : TransactionDto = {
-                    dateOfToday : new Date() ,
-                    amount : dto.amount,
-                    accountID : dto.receiverAccNumber,
-                    type : "debit",
-                    transactionName : "External" ,
-                    description : dto.description
-                }
-            //inserting a recieved external transaction
-            const postTransction = await this.transactionService.createTransaction(insertTransaction)
 
+
+//sending extrnal transaction
+async createExternalTransaction(request: any) {
+   const balance = await this.accountService.getBalance((request).amount);
+    if(balance > request.amount+5 && request.amount <= 50) {        
+        let req: externalDto = {receiverAccNumber:request.receiverAccNumber,amount:request.amount,description:request.description};
+        const token = await this.JwtStrategy.createToken(req,Response);
+        axios.post(`http://${request.url}/external/SendingExternalTransaction`, request,{headers:{'Authorization':`${token}`,'Bypass-Tunnel-Reminder':"any"}})
+        .then(async(response)=>{
+            if(response){ 
+            const insertTransaction : TransactionDto = {
+            dateOfToday : new Date() ,
+            amount : request.amount,
+            accountID : request.receiverAccNumber,
+            type : "debit",
+            transactionName : "External" ,
+            description : request.description
+            }
+            //inserting a recieved external transaction
+            await this.transactionService.createTransaction(insertTransaction)
             //handling 5 dollar fee by posting another transaction
             const insert5dollars:TransactionDto = {
-            transactionName : "5-Dollar-Fee" , accountID : dto.receiverAccNumber,amount: 5,type : "debit" , dateOfToday:new Date() ,description:dto.description}
-            const post5Dollars = await this.transactionService.createTransaction(insert5dollars);
+            transactionName : "5-Dollar-Fee" , accountID : request.receiverAccNumber,amount: 5,type : "debit" , dateOfToday:new Date() ,description:request.description}
+            await this.transactionService.createTransaction(insert5dollars);
             //update the Sender balance
-            this.accountService.updateSenderBalance(dto.receiverAccNumber , dto.amount);
-            this.accountService.updateSenderBalance(dto.receiverAccNumber, 5);
+            this.accountService.updateSenderBalance(request.receiverAccNumber , request.amount);
+            this.accountService.updateSenderBalance(request.receiverAccNumber, 5);
             }
-            else {
-                throw new HttpException('InSuffiecient Funds', HttpStatus.BAD_REQUEST);
-            }
-        } 
-    )
+           
+        }
+        ) 
     }
-
+        else {
+            throw new HttpException('InSuffiecient Funds', HttpStatus.BAD_REQUEST);
+        }
+    
+    }
 
 //receiving external transfer
 async recieveExternalTransfer(dto : externalDto){
     return await this.accountService.FindAccount((dto).receiverAccNumber)  //if this acc is valid
     .then(
         async (account) => {
-            if(account) {
-        
+            if(account) {       
                 const initiateTransaction : TransactionDto = {    //save transaction in our transaction table
                 dateOfToday : new Date(),
                 accountID : dto.receiverAccNumber ,
@@ -82,7 +72,7 @@ async recieveExternalTransfer(dto : externalDto){
                 return  await this.transactionService.createTransaction(initiateTransaction);
             }
             else {
-                throw new HttpException('account does not exist', HttpStatus.BAD_REQUEST);
+                throw new HttpException('account does not exist', 404);
             }
         }
         

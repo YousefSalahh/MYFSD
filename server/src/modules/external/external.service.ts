@@ -13,17 +13,18 @@ export class  ExternalService {
         private transactionService: TransactionService,
         private JwtService:JwtService,
         private accountService: AccountService) {}
-        
+
 //sending extrnal transaction
 async createExternalTransaction(request: any,dto : externalDto ) {
     const token = this.JwtService.sign(
         {
-            receiverAccountNumber:dto.receiverAccNumber,
-             amount:dto.amount ,
+            receiverAccNumber:dto.receiverAccNumber,  //store in the token the details of the transaction
+             amount:dto.amount ,   
              description:dto.description }, 
-            {secret:"My-Secret-Key",
-            expiresIn: "5min",
-      });
+            {
+              secret:"My-Secret-Key", //send secret and expiray date also in the token
+              expiresIn: "5min",
+            });
 
    axios.post(`http://${request.url}/external/createtransfer`, request,{headers:{'Authorization':`${token}`,'Bypass-Tunnel-Reminder':"any"}})
 

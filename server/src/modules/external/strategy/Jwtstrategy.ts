@@ -29,7 +29,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
        receiverAccNumber: payload.receiverAccNumber, amount: payload.amount , description:payload.description
       };
   }
-  createToken(dto:externalDto,res:any)
+  GenerateToken(dto:externalDto,res:any)
   {
     
         //create token

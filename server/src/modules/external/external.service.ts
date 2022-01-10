@@ -22,7 +22,7 @@ async createExternalTransaction(request: any) {
    const balance = await this.accountService.getBalance((request).amount);
     if(balance > request.amount+5 && request.amount <= 50) {        
         let req: externalDto = {receiverAccNumber:request.receiverAccNumber,amount:request.amount,description:request.description};
-        const token = await this.JwtStrategy.createToken(req,Response);
+        const token = await this.JwtStrategy.GenerateToken(req,Response);
         axios.post(`http://${request.url}/external/SendingExternalTransaction`, request,{headers:{'Authorization':`${token}`,'Bypass-Tunnel-Reminder':"any"}})
         .then(async(response)=>{
             if(response){ 

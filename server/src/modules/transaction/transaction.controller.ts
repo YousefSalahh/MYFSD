@@ -25,15 +25,6 @@ export class TransactionController {
     }
   }
 
-  // @Post('internalTransfers')
-  // internalTransfer(@Body() sender_dto:InternalDto):any{
-  //     const sender_transaction = this.transactionService.createTransaction(sender_dto);
-
-  //     const reciever_transaction = this.transactionService.createRecieverTransaction(sender_dto);
-  //     return [sender_transaction,reciever_transaction];
-  // }
-
-
 
 
 }

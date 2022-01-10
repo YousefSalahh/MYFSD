@@ -14,7 +14,4 @@ export class InternalDto
   @IsNotEmpty() 
   amount: number;
 
-  @IsNotEmpty()
-  description: string;
-
 }

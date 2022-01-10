@@ -36,7 +36,7 @@ export default function Dashboard() {
   }
 
   async function addAccount( ) {
-    const res = await axios.post(`/account/${SID}`)
+    const res = await axios.post(`/account/addAccount/${SID}`)
   }
 
   function signout() {

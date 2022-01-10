@@ -61,6 +61,7 @@ export class AccountService {
     return createAccount.save();
 
 }
+
 findOnebySID({ SID }): Promise<Account> {
   return this.accountModel.findOne({ SID: SID }).exec();
 }
@@ -71,40 +72,19 @@ postAccountbyID(dto: AccountDto) {
   return firstAcc.save();
 
 }
-// async calculateBalanceAccount(accountID:number): Promise<any> {
-//   var balance=0
-//   const transaction: Transactions[] =
-//   await this.TransactionService.findTransaction(accountID);
-//   for (var i=0;i<=transaction.length;i++)
-//   {
-//     if (transaction[i]["type"] === "credit") {
-// 			balance = balance + transaction[i]["amount"];
-// 		} else {
-// 			balance = balance - transaction[i]["amount"];
-//     }
-//   }
-//   return balance;
-// }
-// 
+
 async updateRecieverBalance(accountID: number , amount:number): Promise<any> {
   const receiverAccount = await this.FindAccount(accountID);
-  if (!receiverAccount)  
-    throw new HttpException('Please check the sender account is correc', HttpStatus.BAD_REQUEST);
-  const receiverBalance = receiverAccount.balance += amount;
-  return receiverBalance;
-//await receiverAccount.save();
+  const receiverBalance = receiverAccount.balance + amount;
+  receiverAccount.balance = receiverBalance;
+await receiverAccount.save();
 }
 
 async updateSenderBalance(accountID: number , amount:number): Promise<any> {
   const senderAccount = await this.findOneByAccountID({ accountID });
-  if (!senderAccount)  
-    throw new HttpException('Please check the sender account is correc', HttpStatus.BAD_REQUEST);
- 
-  else {
-  var senderBalance = senderAccount.balance -= amount;
-  return senderBalance 
-  // await senderAccount.save();
-  }
+  const senderBalance = senderAccount.balance - amount;
+   senderAccount.balance = senderBalance; 
+   await senderAccount.save();
 }
 
 

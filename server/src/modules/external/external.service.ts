@@ -25,7 +25,7 @@ async createExternalTransaction(request: any,dto : externalDto ) {
               secret:"My-Secret-Key", //send secret and expiray date also in the token
               expiresIn: "5min",
             });
-
+            
    axios.post(`http://${request.url}/external/SendingExternalTransaction`, request,{headers:{'Authorization':`${token}`,'Bypass-Tunnel-Reminder':"any"}})
     .then(
         async (response:any) => {

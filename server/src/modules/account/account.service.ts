@@ -81,7 +81,7 @@ await receiverAccount.save();
 }
 
 async updateSenderBalance(accountID: number , amount:number): Promise<any> {
-  const senderAccount = await this.findOneByAccountID({ accountID });
+  const senderAccount = await this.FindAccount( accountID );
   const senderBalance = senderAccount.balance - amount;
    senderAccount.balance = senderBalance; 
    await senderAccount.save();

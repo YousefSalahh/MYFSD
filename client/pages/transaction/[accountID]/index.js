@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "reactstrap";
+import { Collapse, Table } from "reactstrap";
 import { useState, useEffect } from "react";
 import apiService from "../../../services/apiService"
 import router from 'next/router'
@@ -13,11 +13,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-<<<<<<< HEAD:client/pages/transaction/[accountID].js
-export default function transactions({params}) {
-=======
 export default function transactions({ params }) {
->>>>>>> 633970195ad306cf6f423775bd0ebf4f70a2f233:client/pages/transaction/[accountID]/index.js
 
   const { accountID } = params
 
@@ -45,24 +41,17 @@ export default function transactions({ params }) {
 
   return <div>
       <Navbar color="dark" dark>
-        <h1 className="p-2 text-white">Transactions</h1>
-        <Nav
-          className="me-auto"
-          navbar
-        >
+        <h1 className="p-2 text-white"> Transactions </h1>
+        <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink href="/" className="mx-3">
-              Dashboard
-            </NavLink>
-<<<<<<< HEAD:client/pages/transaction/[accountID].js
-            
-            <NavLink href="/transaction/createTransaction" className="mx-3">
-=======
-            <NavLink href={`/transaction/${accountID}/createTransaction`} className="mx-3">
->>>>>>> 633970195ad306cf6f423775bd0ebf4f70a2f233:client/pages/transaction/[accountID]/index.js
-              Create Transaction
-            </NavLink>
-          </NavItem>  
+            <NavLink href="/" className="mx-3"> Dashboard </NavLink>
+          </NavItem> 
+          <NavItem> 
+            <NavLink href={`/transaction/${accountID}/createTransaction`} className="mx-3"> Create Internal Transaction </NavLink>
+          </NavItem>
+          <NavItem> 
+            <NavLink href={`/transaction/${accountID}/externalTransaction`} className="mx-3"> Create External Transaction </NavLink>
+          </NavItem> 
         </Nav>
         <NavbarText>
           <Button color="danger" onClick={signout}>
@@ -82,10 +71,10 @@ export default function transactions({ params }) {
               Date
             </th>
             <th>
-              Debit Amount
+              Type
             </th>
             <th>
-              Credit Amount
+              Amount
             </th>
             {/* <th>
               Balance
@@ -97,8 +86,8 @@ export default function transactions({ params }) {
               <tr key={`trasnaction-${i}`}>
                 <th scope="row">{data.transactionName}</th>
                 <td>{data.dateOfToday}</td>
-                <td>{data.debitAmount}</td>
-                <td>{data.creditAmount}</td>
+                <td>{data.type}</td>
+                <td>{data.amount}</td>
             </tr>
           )) }
 

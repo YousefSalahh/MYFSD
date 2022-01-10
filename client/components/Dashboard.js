@@ -36,7 +36,7 @@ export default function Dashboard() {
   }
 
   async function addAccount( ) {
-    const res = await axios.post(`/account/addAccount/${SID}`)
+    await axios.post(`/account/addAccount/${SID}`)
   }
 
   function signout() {
@@ -55,12 +55,11 @@ export default function Dashboard() {
       <>
               <Navbar color="dark" dark>
                   <h1 className="p-2 text-white">Dashboard</h1>
-                  <NavItem>
-                    <NavLink className="mx-3" onClick={addAccount}>
-                          Add Account
-                    </NavLink>
-                  </NavItem>
+                
                   <NavbarText>
+                  <Button color="primary" onClick={addAccount}>
+                      Add Account
+                  </Button>
                   <Button color="danger" onClick={signout}>
                       Signout
                   </Button>

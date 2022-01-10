@@ -13,9 +13,9 @@ export class  ExternalService {
         private JwtStrategy:JwtStrategy,
         private accountService: AccountService) {}
 
-
-
+        
 //sending extrnal transaction
+
 async createExternalTransaction(request: any) {
    const balance = await this.accountService.getBalance((request).amount);
    /**
@@ -47,11 +47,11 @@ async createExternalTransaction(request: any) {
            
         }) 
     }
-        else {
-            throw new HttpException('InSuffiecient Funds', HttpStatus.BAD_REQUEST);
-        }
-    
+    else {
+        throw new HttpException('InSuffiecient Funds', 400);
     }
+
+}
 
 //receiving external transfer
 async recieveExternalTransfer(dto : externalDto){

@@ -17,13 +17,7 @@ import Link from "next/link";
 
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
-// export async function getServerSideProps(context) {
-//   return {
-//     props: {
-//       params: context.params
-//     }, 
-//   }
-// }
+
 export default function Dashboard() {
  
   const [accounts, setAccounts] = useState([]);

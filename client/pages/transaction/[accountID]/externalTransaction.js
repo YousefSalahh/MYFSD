@@ -6,6 +6,7 @@ import {
   Input,
   Label,
 } from "reactstrap";
+import axios from "axios";
 import { useState } from "react";
 
 export async function getServerSideProps(context) {
@@ -39,7 +40,7 @@ export default function transactions({params}) {
           alert('transaction complete');
         })
         .catch(function (error) {
-          alert('please check your internet connection');
+          alert('Error Occurred');
         });
 
       }

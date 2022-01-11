@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Collapse, Table } from "reactstrap";
 import { useState, useEffect } from "react";
@@ -76,9 +77,6 @@ export default function transactions({ params }) {
             <th>
               Amount
             </th>
-            {/* <th>
-              Balance
-            </th> */}
           </tr>
         </thead>
         <tbody>

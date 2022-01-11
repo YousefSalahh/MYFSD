@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { externalDto } from '../dto/external.dto';
+import { ExternalDto } from '../dto/ExternalDto';
 import { JwtService } from '@nestjs/jwt';
 /**
  * http request consists of body and header
@@ -25,12 +25,12 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
        receiverAccNumber: payload.receiverAccNumber, amount: payload.amount , description:payload.description
       };
   }
-  GenerateToken(dto:externalDto)
+  GenerateToken(dto:ExternalDto)
   {
     //create token
     const token = this.JwtService.sign(
         {
-            receiverAccNumber:dto.receiverAccNumber,  //store in the token the details of the transaction
+            receiverAccountNumber:dto.receiverAccountNumber,  //store in the token the details of the transaction
              amount:dto.amount ,   
              description:dto.description }, 
             {

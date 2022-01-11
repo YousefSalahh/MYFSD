@@ -1,27 +1,34 @@
 import React from "react";
 import {
   Button,
-  Form,
-  FormGroup,
+  InputGroup,
+  InputGroupText,
   Input,
   Label,
-  FormFeedback,
 } from "reactstrap";
 import { useState } from "react";
-import styles from "../styles/Home.module.css";
 
-export default function transactions() {
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      params: context.params
+    }, 
+  }
+}
+
+export default function transactions({params}) {
     const { accountID } = params
     const [transactions, setTransactions] = useState({
+      URL: "",
       toAccount: undefined,
       description: "",
       amount: undefined,
     });
 
-
     async function addExternalTransactions () {
         axios.post(`/external/SendingExternalTransaction/${accountID}`, {
           fromAccount: accountID,
+          URL:"https://myfsd.loca.lt",
           toAccount: transactions.toAccount,
           description: transactions.description,
           amount: transactions.amount
@@ -44,7 +51,7 @@ export default function transactions() {
       <InputGroup className="w-50">
         <Input onChange={(e) => setTransactions({ ...transactions, description: e.target.value })} name="transactionDescription" placeholder="Give description of transaction"  />
         <InputGroupText>
-        transaction Description  
+          Transaction Description  
         </InputGroupText>
       </InputGroup>
       <br />
@@ -53,6 +60,20 @@ export default function transactions() {
         <InputGroupText>
           Receiver Account Number
         </InputGroupText>
+      </InputGroup>
+      <br  />
+      <InputGroup className="w-50">
+      <InputGroupText>
+          Select Bank
+      </InputGroupText>
+          <Input type="select" name="bankSelect" id="bankSelect" onChange={(e) => setTransactions({...transactions, URL: e.target.value})}>
+            <option onClick={ () => {setTransactions({URL:"default"})}}> Please Pick A bank </option>
+            <option onClick={ () => {setTransactions({URL: "https://safemonii.loca.lt"})}}> Safemonii </option>
+            <option onClick={ () => {setTransactions({URL: "https://ironbank.loca.lt"})}}> Ironbank </option>
+            <option onClick={ () => {setTransactions({URL: "https://solace.loca.It"})}}> Solace </option>
+            <option onClick={ () => {setTransactions({URL: "https://amryinternationalbank.loca.lt"})}}> Amry International Bank</option>
+            <option onClick={ () => {setTransactions({URL: "https://luckbank.loca.lt"})}}>Luck Bank</option>
+          </Input>
       </InputGroup>
       <br />
       <InputGroup className="w-50">

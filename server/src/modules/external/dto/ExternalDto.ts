@@ -6,7 +6,10 @@ export class ExternalDto{
   url:string;
 
   @IsNotEmpty()
-  receiverAccNumber:number;
+  receiverAccountNumber:number;
+
+  @IsNotEmpty()
+  accountID: number;
 
   @IsNotEmpty()
   amount: number;

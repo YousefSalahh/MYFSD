@@ -17,18 +17,22 @@ constructor(
 //sending extrnal transaction
 
 async createExternalTransaction(request: ExternalDto) {
-   const balance = await this.accountService.getBalance((request).amount);
+   const balance = await this.accountService.getBalance(request.accountID);
    /**
     * get the balance of the user sending money
     * check whether their enough funds to send amount + 5$
     */
+   console.log(balance)
+   const {receiverAccountNumber,amount, description}=request
     if(balance >= request.amount+5 && request.amount <= 50) {        
-        //let req: externalDto = {receiverAccNumber:request.receiverAccNumber,amount:request.amount,description:request.description};
-        const token = await this.JwtStrategy.GenerateToken({receiverAccNumber:request.receiverAccNumber,amount:request.amount,description:request.description});
-        axios.post(`http://${request.url}/external/transfer`, request,{headers:{'Authorization':`${token}`,'Bypass-Tunnel-Reminder':"any"}})
+        let req: ExternalDto = {receiverAccountNumber:request.receiverAccountNumber,url:request.url,accountID:request.accountID,amount:request.amount,description:request.description};
+        const token = await this.JwtStrategy.GenerateToken(req);
+        console.log(token)
+        axios.post(`http://${request.url}/external/transfer`, request,{headers:{'Authorization':`Bearer ${token}`,'Bypass-Tunnel-Reminder':"any"}})
         .then(async(response)=>{
             if(response){ 
-            const insertTransaction : TransactionDto = {dateOfToday : new Date() ,amount : request.amount,accountID : request.receiverAccNumber,
+            console.log("sucess")
+            const insertTransaction : TransactionDto = {dateOfToday : new Date() ,amount : request.amount,accountID : request.receiverAccountNumber,
             type : "debit",transactionName : "External" ,description : request.description}
 
             //inserting a recieved external transaction
@@ -37,15 +41,19 @@ async createExternalTransaction(request: ExternalDto) {
             
             //handling 5 dollar fee by posting another transaction
             const insert5dollars:TransactionDto = {
-            transactionName : "5-Dollar-Fee" , accountID : request.receiverAccNumber,amount: 5,type : "debit" , dateOfToday:new Date() ,description:request.description}
+            transactionName : "5-Dollar-Fee" , accountID : request.receiverAccountNumber,amount: 5,type : "debit" , dateOfToday:new Date() ,description:request.description}
             await this.transactionService.createTransaction(insert5dollars);
 
             //update the Sender balance
-            this.accountService.updateSenderBalance(request.receiverAccNumber , request.amount);
-            this.accountService.updateSenderBalance(request.receiverAccNumber, request.amount);
+            this.accountService.updateSenderBalance(request.accountID , request.amount);
+            this.accountService.updateSenderBalance(request.receiverAccountNumber, insert5dollars.amount);
             }
-           
-        }) 
+           console.log()
+        }) .catch(err=>console.log(
+           'error', err.response.data
+        )
+        
+        )
     }
     else {
         throw new HttpException('InSuffiecient Funds', 400);
@@ -55,15 +63,16 @@ async createExternalTransaction(request: ExternalDto) {
 
 //receiving external transfer
 async recieveExternalTransfer(dto : externalDto){
-    return await this.accountService.FindAccount((dto).receiverAccNumber)  //if this acc is valid
+    return await this.accountService.FindAccount(dto.receiverAccountNumber)  //if this acc is valid
     .then(
         async (account) => {
             if(account) {   
                 //save transaction
-                const initiateTransaction : TransactionDto = {dateOfToday : new Date(),accountID : dto.receiverAccNumber ,type : "credit",
-                amount : dto.amount.valueOf(),transactionName : "External transfer" ,description : dto.description
+                const initiateTransaction : TransactionDto = {dateOfToday : new Date(),accountID : dto.receiverAccountNumber ,type : "credit",
+                amount : dto.amount,transactionName : "External transfer" ,description : dto.description
                 }
-                this.accountService.updateRecieverBalance((dto).receiverAccNumber , dto.amount);
+                this.accountService.updateRecieverBalance(dto.receiverAccountNumber , dto.amount);
+                console.log("sucess2")
                 return  await this.transactionService.createTransaction(initiateTransaction);
             }
             else {

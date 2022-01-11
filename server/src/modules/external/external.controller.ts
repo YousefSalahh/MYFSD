@@ -16,8 +16,8 @@ export class ExternalController {
     CreateExternalTransfer(@Body()request: ExternalDto ):any {
      try{
           return this.externalService.createExternalTransaction(request );
-        } catch{
-            (err) => console.log(err.message);
+        } catch (err) {
+              console.log(err.message);
         }
     }
 
@@ -25,10 +25,10 @@ export class ExternalController {
     recieveExternalTransfer(@Body()dto:externalDto):any {
      try{
           return this.externalService.recieveExternalTransfer(dto);
-        } catch{
-            (err) => console.log(err.message);
+        } catch(err){
+             console.log(err.message);
         }
     }
 
+  }
 
-}

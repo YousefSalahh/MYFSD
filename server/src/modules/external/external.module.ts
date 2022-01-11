@@ -7,6 +7,7 @@ import { TransactionModule } from '../transaction/transaction.module';
 import { AccountModule } from '../account/account.module';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './strategy/Jwtstrategy';
 
 
 @Module({
@@ -22,8 +23,8 @@ import { PassportModule } from '@nestjs/passport';
      
    
   controllers: [ExternalController],
-  providers: [ExternalService],
-  exports: [ExternalService,JwtService],
+  providers: [ExternalService, JwtStrategy],
+  exports: [ExternalService],
 })
 
 export class ExternalTransactionModule {}

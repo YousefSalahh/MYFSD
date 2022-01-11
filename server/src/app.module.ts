@@ -5,6 +5,7 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { AccountModule } from "./modules/account/account.module";
 import { TransactionModule } from "./modules/transaction/transaction.module";
 import { ConfigModule } from "@nestjs/config";
+import { ExternalTransactionModule } from "./modules/external/external.module";
 
 require('dotenv').config()
 
@@ -16,6 +17,7 @@ require('dotenv').config()
     TransactionModule,
     AccountModule,
     AuthModule,
+    ExternalTransactionModule
   ],
 })
 export class AppModule {}

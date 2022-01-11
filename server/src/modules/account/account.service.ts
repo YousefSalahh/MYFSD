@@ -75,15 +75,21 @@ postAccountbyID(dto: AccountDto) {
 
 async updateRecieverBalance(accountID: number , amount:number): Promise<any> {
   const receiverAccount = await this.FindAccount(accountID);
-  const receiverBalance = receiverAccount.balance + amount;
-  receiverAccount.balance = receiverBalance;
-await receiverAccount.save();
+  //const receiverBalance = receiverAccount.balance + amount;
+  console.log("amount",amount)
+  console.log("balance",receiverAccount.balance)
+  receiverAccount.balance +=amount;
+  console.log(receiverAccount.balance)
+  await receiverAccount.save();
 }
 
 async updateSenderBalance(accountID: number , amount:number): Promise<any> {
   const senderAccount = await this.FindAccount( accountID );
+  console.log("amountSender",amount)
+  console.log("balanceSender",senderAccount.balance)
   const senderBalance = senderAccount.balance - amount;
    senderAccount.balance = senderBalance; 
+   console.log("balance2Sender",senderAccount.balance)
    await senderAccount.save();
 }
 

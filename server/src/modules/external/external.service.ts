@@ -22,8 +22,12 @@ async createExternalTransaction(request: ExternalDto) {
     * get the balance of the user sending money
     * check whether their enough funds to send amount + 5$
     */
+    const isSenderValid = await this.accountService.FindAccount(request.accountID);
+
+
    console.log(balance)
    const {receiverAccountNumber,amount, description}=request
+   if(isSenderValid){
     if(balance >= request.amount+5 && request.amount <= 50) {        
         let req: ExternalDto = {receiverAccountNumber:request.receiverAccountNumber,url:request.url,accountID:request.accountID,amount:request.amount,description:request.description};
         const token = await this.JwtStrategy.GenerateToken(req);
@@ -57,6 +61,10 @@ async createExternalTransaction(request: ExternalDto) {
     }
     else {
         throw new HttpException('InSuffiecient Funds', 400);
+    }
+}
+    else{
+        throw new HttpException('account does not exist', 404);
     }
 
 }

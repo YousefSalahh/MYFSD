@@ -7,12 +7,16 @@ import {
   FormFeedback,
 } from "reactstrap";
 import { useState } from "react";
+import { useMutateLoginUser } from "../adapters/user"
 import styles from "../styles/Home.module.css";
+import router from "next/router";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailState, setEmailState] = useState("");
+
+  const loginMutation = useMutateLoginUser() ;
 
   const validateEmail = (value) => {
     const emailRegex =
@@ -40,6 +44,12 @@ export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Call User Login Adapter
+    loginMutation.mutate({ GIUemail: email, password })
+  };
+
+  const handleReg = (event) => {
+    event.preventDefault();
+    router.replace("/register")
   };
 
   return (
@@ -74,7 +84,10 @@ export default function Login() {
             onChange={handleChange}
           />
         </FormGroup>
-        <Button color="primary">Submit</Button>
+        <Button color="primary">Submit</Button> 
+        <p>
+          </p>
+        <Button color="primary" onClick={handleReg}>Register</Button>
       </Form>
     </div>
   );
